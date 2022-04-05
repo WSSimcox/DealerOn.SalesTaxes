@@ -1,6 +1,6 @@
-﻿using DealerOn.SalesTaxes.Models;
+﻿using DealerOn.SalesTaxes.Data;
+using DealerOn.SalesTaxes.Models;
 using DealerOn.SalesTaxes.Models.Exceptions;
-using DealerOn.SalesTaxes.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DealerOn.SalesTaxes.Web.Controllers
@@ -9,42 +9,66 @@ namespace DealerOn.SalesTaxes.Web.Controllers
     [Route("api/v1/product")]
     public class ProductController : ControllerBase
     {
+        private readonly ProductInMemoryRepository _productInMemoryRepository;
 
         /// <summary>
-        /// Adds product to Transaction
+        /// Gets Product from memory cache using specific id
         /// </summary>
-        /// <param name="product"></param>
-        /// <returns> IActionResult status </returns>
-        [HttpPut]
-        public IActionResult AddProduct(Product product)
+        /// <param name="id"></param>
+        /// <returns> Product found </returns>
+        [HttpGet]
+        [Route("{id}")]
+        public IActionResult GetProductById(Guid id)
         {
-            try
-            {
-                _transactionServices.AddProduct(product);
-                return Ok();
-            }
-            catch (NotFoundException nex)
-            {
+            var result = _productInMemoryRepository.GetProductById(id);
+
+            if (result == null)
                 return NotFound();
-            }
-            catch (Exception ex)
-            {
-                //Returns Exception and message Description
-                return StatusCode(500, ex.Message);
-            }
+
+            return Ok(result);
         }
 
         /// <summary>
-        /// Removes product from Transaction
+        /// Gets all Products in memory cache
+        /// </summary>
+        /// <returns> All Products found </returns>
+        [HttpGet]
+        public IActionResult GetProducts()
+        {
+            var result = _productInMemoryRepository.GetProducts();
+            
+            if (result == null)
+                return NotFound();
+
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Adds product to Product memory cache
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns> IActionResult status </returns>
+        [HttpPost]
+        public IActionResult AddProduct(Product product)
+        {
+            if (product == null)
+                return BadRequest();
+
+            _productInMemoryRepository.AddProduct(product);
+            return Ok();
+        }
+
+        /// <summary>
+        /// Removes product from Product memory cache
         /// </summary>
         /// <param name="product"></param>
         /// <returns></returns>
-        [HttpPut]
-        public IActionResult RemoveProduct(Product product)
+        [HttpDelete]
+        public IActionResult RemoveProduct(Guid id)
         {
             try
             {
-                _transactionServices.RemoveProduct(product);
+                _productInMemoryRepository.RemoveProduct(id);
                 return Ok();
             }
             catch (NotFoundException nex)

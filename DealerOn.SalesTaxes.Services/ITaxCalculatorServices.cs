@@ -8,7 +8,7 @@ using DealerOn.SalesTaxes.Models.Transactions;
 
 namespace DealerOn.SalesTaxes.Services
 {
-    public interface ITaxCalculator
+    public interface ITaxCalculatorServices
     {
         /// <summary>
         /// This function is responsible for calculating both Sales and Import

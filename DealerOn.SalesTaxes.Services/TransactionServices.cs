@@ -8,11 +8,11 @@ namespace DealerOn.SalesTaxes.Services
     public class TransactionServices : ITransactionServices
     {
         private SalesTransaction _salesTransaction;
-        private readonly ITaxCalculator[] _calculators;
+        private readonly ITaxCalculatorServices[] _calculators;
         private readonly IProductRepository _productRepository;
         private readonly object _lock = new object();
 
-        public TransactionServices(IProductRepository productRepository, ITaxCalculator[] calculators)
+        public TransactionServices(IProductRepository productRepository, ITaxCalculatorServices[] calculators)
         {
             _productRepository = productRepository;
             _calculators = calculators;

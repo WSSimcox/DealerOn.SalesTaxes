@@ -3,11 +3,11 @@ using DealerOn.SalesTaxes.Models.Transactions;
 
 namespace DealerOn.SalesTaxes.Services
 {
-    public class ImportTaxCalculator : ITaxCalculator
+    public class ImportTaxCalculatorServices : ITaxCalculatorServices
     {
         private readonly decimal _importTaxRate = 0.5M;
 
-        public ImportTaxCalculator() { }
+        public ImportTaxCalculatorServices() { }
 
         public CalculatedValue Calculate(Product product, int quanitity)
         {

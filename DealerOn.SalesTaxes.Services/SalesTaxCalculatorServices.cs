@@ -4,13 +4,13 @@ using DealerOn.SalesTaxes.Models.Transactions;
 
 namespace DealerOn.SalesTaxes.Services
 {
-    public class SalesTaxCalculator : ITaxCalculator
+    public class SalesTaxCalculatorServices : ITaxCalculatorServices
     {
         private readonly decimal _basicTaxRate = 0.10M;
         private readonly IProductTaxRepository _productTaxRepository;
         private readonly Dictionary<ProductType, decimal> _taxMap = new Dictionary<ProductType, decimal>();   
 
-        public SalesTaxCalculator(IProductTaxRepository productTaxRepository)
+        public SalesTaxCalculatorServices(IProductTaxRepository productTaxRepository)
         { 
             _productTaxRepository = productTaxRepository;
             var rates = _productTaxRepository.GetTaxRates();

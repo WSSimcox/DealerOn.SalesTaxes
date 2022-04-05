@@ -129,12 +129,12 @@ namespace DealerOn.SalesTaxes.Services.Tests
         /// One being for Sales Tax and the other for Import tax
         /// </summary>
         /// <returns> Array of Calculators </returns>
-        public ITaxCalculator[] CalculatorFiller()
+        public ITaxCalculatorServices[] CalculatorFiller()
         {
-            ITaxCalculator[] calcArray = new ITaxCalculator[2]; 
+            ITaxCalculatorServices[] calcArray = new ITaxCalculatorServices[2]; 
 
-            var salesCalc = new SalesTaxCalculator(new ProductTaxRepository());
-            var importCalc = new ImportTaxCalculator();
+            var salesCalc = new SalesTaxCalculatorServices(new ProductTaxRepository());
+            var importCalc = new ImportTaxCalculatorServices();
 
             calcArray[0] = salesCalc;
             calcArray[1] = importCalc;

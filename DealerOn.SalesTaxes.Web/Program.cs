@@ -10,8 +10,8 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddSingleton<IProductRepository>();
 builder.Services.AddSingleton<IProductTaxRepository>();
-builder.Services.AddSingleton<ITaxCalculator>(builder => new ImportTaxCalculator());
-builder.Services.AddScoped<ITaxCalculator>(builder => new SalesTaxCalculator(new ProductTaxRepository()));
+builder.Services.AddSingleton<ITaxCalculatorServices>(builder => new ImportTaxCalculatorServices());
+builder.Services.AddScoped<ITaxCalculatorServices>(builder => new SalesTaxCalculatorServices(new ProductTaxRepository()));
 builder.Services.AddSingleton<ITransactionServices>();
 builder.Services.AddSingleton<IProductServices>();
 
