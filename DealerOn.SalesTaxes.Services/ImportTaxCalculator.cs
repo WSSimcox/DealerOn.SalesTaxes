@@ -3,7 +3,7 @@ using DealerOn.SalesTaxes.Models.Transactions;
 
 namespace DealerOn.SalesTaxes.Services
 {
-    public class ImportTaxCalculator : ICalculator
+    public class ImportTaxCalculator : ITaxCalculator
     {
         private readonly decimal _importTaxRate = 0.5M;
 
@@ -13,7 +13,12 @@ namespace DealerOn.SalesTaxes.Services
         {
             var calcVal = new CalculatedValue();
 
-            var totalTax = (product.Price * _importTaxRate) * quanitity;
+            var taxRate = _importTaxRate;
+
+            if (!product.IsImported)
+                taxRate = 0M;
+
+            var totalTax = (product.Price * taxRate) * quanitity;
 
             // return total amount rounded to nearest 5 cents
             calcVal.CostPerItem = Math.Ceiling(totalTax / quanitity * 20M) / 20M;

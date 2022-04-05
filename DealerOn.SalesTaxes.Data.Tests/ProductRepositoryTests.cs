@@ -6,7 +6,7 @@ using System;
 namespace DealerOn.SalesTaxes.Data.Tests
 {
     [TestClass]
-    public class ProductInMemoryTests
+    public class ProductRepositoryTests
     {
         /// <summary>
         /// Test method for AddProduct()

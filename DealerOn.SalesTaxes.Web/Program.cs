@@ -1,8 +1,20 @@
+using DealerOn.SalesTaxes.Data;
+using DealerOn.SalesTaxes.Services;
+using Microsoft.Extensions.DependencyInjection;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddSingleton<IProductRepository>();
+builder.Services.AddSingleton<IProductTaxRepository>();
+builder.Services.AddSingleton<ITaxCalculator>(builder => new ImportTaxCalculator());
+builder.Services.AddScoped<ITaxCalculator>(builder => new SalesTaxCalculator(new ProductTaxRepository()));
+builder.Services.AddSingleton<ITransactionServices>();
+builder.Services.AddSingleton<IProductServices>();
+
 
 var app = builder.Build();
 

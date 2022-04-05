@@ -3,7 +3,7 @@
     public class SalesTransaction
     {
         /// <summary>
-        /// Unique Identification number for a reciept
+        /// Unique Identification number for a transaction
         /// </summary>
         public Guid Id { get; set; }
 
@@ -13,7 +13,7 @@
         public DateTime TransactionDate { get; set; }
 
         /// <summary>
-        /// List of all products and their quantities that belong to a reciept
+        /// List of all products and their quantities that belong to a transaction
         /// </summary>
         public IList<LineItem>? LineItems { get; set; }
 

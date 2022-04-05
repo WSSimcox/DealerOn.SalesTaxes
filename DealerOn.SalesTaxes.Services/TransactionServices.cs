@@ -5,15 +5,15 @@ using DealerOn.SalesTaxes.Models;
 
 namespace DealerOn.SalesTaxes.Services
 {
-    public class TransactionService : ITransactionServices
+    public class TransactionServices : ITransactionServices
     {
         private SalesTransaction _salesTransaction;
-        private readonly ICalculator[] _calculators;
+        private readonly ITaxCalculator[] _calculators;
         private readonly IProductRepository _productRepository;
         private readonly object _lock = new object();
 
-        public TransactionService(IProductRepository productRepository, ICalculator[] calculators) 
-        { 
+        public TransactionServices(IProductRepository productRepository, ITaxCalculator[] calculators)
+        {
             _productRepository = productRepository;
             _calculators = calculators;
 
@@ -50,12 +50,13 @@ namespace DealerOn.SalesTaxes.Services
         {
             var receipt = new Receipt();
 
-            foreach(var item in _salesTransaction.LineItems)
+            foreach (var item in _salesTransaction.LineItems)
             {
                 foreach (var calculator in _calculators)
                 {
-                    /////
-                    receipt.TotalTax calculator.Calculate(item.Product, item.Quantity);
+                    var calcVal = calculator.Calculate(item.Product, item.Quantity);
+                    receipt.TotalTax += calcVal.TotalTax;
+                    receipt.TotalCost += calcVal.TotalCost;
                 }
             }
 

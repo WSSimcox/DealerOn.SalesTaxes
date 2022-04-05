@@ -4,7 +4,7 @@ using DealerOn.SalesTaxes.Models.Transactions;
 
 namespace DealerOn.SalesTaxes.Services
 {
-    public class SalesTaxCalculator : ICalculator
+    public class SalesTaxCalculator : ITaxCalculator
     {
         private readonly decimal _basicTaxRate = 0.10M;
         private readonly IProductTaxRepository _productTaxRepository;

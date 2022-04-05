@@ -11,11 +11,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{95D81DE6
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DealerOn.SalesTaxes.Web", "DealerOn.SalesTaxes.Web\DealerOn.SalesTaxes.Web.csproj", "{DAF81DD0-43D5-4374-BBF9-B1921EC4A81B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DealerOn.SalesTaxes.Data.Tests", "DealerOn.SalesTaxes.Data.Tests\DealerOn.SalesTaxes.Data.Tests.csproj", "{B73212E6-CD29-4F2F-8A3C-DBA795315BD3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DealerOn.SalesTaxes.Data.Tests", "DealerOn.SalesTaxes.Data.Tests\DealerOn.SalesTaxes.Data.Tests.csproj", "{B73212E6-CD29-4F2F-8A3C-DBA795315BD3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DealerOn.SalesTaxes.Services", "DealerOn.SalesTaxes.Services\DealerOn.SalesTaxes.Services.csproj", "{4CE2AB80-B779-4721-A5CD-AFE16E72B67E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DealerOn.SalesTaxes.Services", "DealerOn.SalesTaxes.Services\DealerOn.SalesTaxes.Services.csproj", "{4CE2AB80-B779-4721-A5CD-AFE16E72B67E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DealerOn.SalesTaxes.Services.Test", "DealerOn.SalesTaxes.Services.Test\DealerOn.SalesTaxes.Services.Test.csproj", "{EC2AB692-06AD-448A-B763-D38C4BB25D26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DealerOn.SalesTaxes.Services.Tests", "DealerOn.SalesTaxes.Services.Test\DealerOn.SalesTaxes.Services.Tests.csproj", "{EC2AB692-06AD-448A-B763-D38C4BB25D26}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
