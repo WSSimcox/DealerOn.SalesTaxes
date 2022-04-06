@@ -18,6 +18,9 @@ namespace DealerOn.SalesTaxes.Services
         /// <returns> Sales and Import taxes of a product </returns>
         CalculatedValue Calculate(Product product, int quanitity);
 
+        /// <summary>
+        /// Function responsible for assigning name of this calculator
+        /// </summary>
         string Name { get; }
     }
 }

@@ -44,8 +44,8 @@
     public enum ProductType
     {
         Other = 1,
-        Book = 1,
-        Food = 2,
-        Medical = 3,
+        Book = 2,
+        Food = 3,
+        Medical = 4,
     }
 }

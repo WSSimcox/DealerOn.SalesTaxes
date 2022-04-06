@@ -1,7 +1,7 @@
 ﻿using DealerOn.SalesTaxes.Data;
 using DealerOn.SalesTaxes.Models.Transactions;
 using DealerOn.SalesTaxes.Models;
-
+using DealerOn.SalesTaxes.Models.Exceptions;
 
 namespace DealerOn.SalesTaxes.Services
 {
@@ -12,6 +12,11 @@ namespace DealerOn.SalesTaxes.Services
         private readonly IProductRepository _productRepository;
         private readonly object _lock = new object();
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="productRepository"></param>
+        /// <param name="calculators"></param>
         public TransactionServices(IProductRepository productRepository, ITaxCalculatorServices[] calculators)
         {
             _productRepository = productRepository;
@@ -21,45 +26,142 @@ namespace DealerOn.SalesTaxes.Services
             _salesTransaction = SalesTransaction.CreateSalesTransaction();
         }
 
-        public void AddProduct(Product product)
+        /// <summary>
+        /// This function is responsible for adding a LineItem to a transaction
+        /// </summary>
+        /// <param name="product"></param>
+        public void AddLineItem(Product product)
         {
-            var item = _salesTransaction.LineItems?.Single(p => p.Product.Id == product.Id);
-
-            // if Product is already inside receipt, then increment value
-            if (item == null)
-                _salesTransaction.LineItems?.Add(new LineItem(product, 1));
-            else
-                item.Quantity++;
+            AddLineItem(product.Id, 1);
         }
 
-        public void RemoveProduct(Product product)
+        /// <summary>
+        /// This overloaded function is responsible for adding a LineItem
+        /// to a transaction
+        /// </summary>
+        /// <param name="product"></param>
+        public void AddLineItem(Guid productId, int quanitity = 1)
         {
-            var item = _salesTransaction.LineItems?.Single(p => p.Product.Id == product.Id);
+            var item = _salesTransaction.LineItems?.SingleOrDefault(p => p.Product.Id == productId);
 
-            if (item == null)
-                return;
+            var product = _productRepository.GetProductById(productId);
+
+            if (product == null)
+                throw new NotFoundException($"Product not found for id: {productId}");
 
             // if Product is already inside receipt, then increment value
-            if (item.Quantity <= 1)
+            if (item == null)
+                _salesTransaction.LineItems?.Add(new LineItem(product, quanitity));
+            else
+                item.Quantity += quanitity;
+        }
+
+        /// <summary>
+        /// This function is responsible for removing a LineItem from
+        /// a transaction
+        /// </summary>
+        /// <param name="product"></param>
+        public void RemoveLineItem(Product product)
+        {
+            RemoveLineItem(product.Id);
+        }
+
+        /// <summary>
+        /// This overloaded function is responsible for removing a LineItem
+        /// from a transaction
+        /// </summary>
+        /// <param name="productId"></param>
+        public void RemoveLineItem(Guid productId)
+        {
+            var item = _salesTransaction.LineItems?.SingleOrDefault(p => p.Product.Id == productId);
+
+            // if Product exists then remove 
+            if (item != null)
                 _salesTransaction.LineItems?.Remove(item);
-            else
-                item.Quantity--;
         }
 
-        public Receipt GenerateReceipt()
+        /// <summary>
+        /// This overloaded function is responsible for adjusting a LineItem's
+        /// product's quantity a transaction
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <param name="quanitity"></param>
+        public void AdjustLineItemQuanitity(Guid productId, int quanitity)
         {
-            var receipt = new Receipt();
+            var item = _salesTransaction.LineItems?.SingleOrDefault(p => p.Product.Id == productId);
+
+            // Checking if not null
+            if (item != null)
+            {
+                // if item's quanitity > input then subtract, else remove item
+                if (item.Quantity > quanitity)
+                    item.Quantity -= quanitity;
+                else
+                    RemoveLineItem(item.Product.Id);
+            }
+        }
+
+        /// <summary>
+        /// This function is responsbile for 
+        /// </summary>
+        /// <returns></returns>
+        public int GetAllProductCount()
+        {
+            int count = 0;
 
             foreach (var item in _salesTransaction.LineItems)
+                count += item.Quantity;
+
+            return count;
+        }
+
+        /// <summary>
+        /// This function is responsible for generating a Receipt object
+        /// </summary>
+        /// <returns></returns>
+        public Receipt GenerateReceipt()
+        {
+            var receipt = CreateTransactionReceipt();
+
+            if (_salesTransaction.LineItems == null)
+                return receipt;
+
+            // Iterating through each LineItem in the transaction
+            foreach (var item in _salesTransaction.LineItems)
             {
+                var calcVals = new List<CalculatedValue>();
+
+                // Making price the starting TotalCost
+                receipt.TotalCost += item.Product.Price;
+
+                // Calculating both sales and import tax
                 foreach (var calculator in _calculators)
                 {
                     var calcVal = calculator.Calculate(item.Product, item.Quantity);
+                    // Adding the tax
                     receipt.TotalTax += calcVal.TotalTax;
-                    receipt.TotalCost += calcVal.TotalCost;
+                    receipt.TotalCost += calcVal.TotalTax;
+                    // Adding current calcVals to our list
+                    calcVals.Add(calcVal);
                 }
+
+                item.ComputedValue = calcVals;
+                receipt.LineItems?.Add(item);
             }
 
+            return receipt;
+        }
+
+        /// <summary>
+        /// Initializes a Receipt object based on current transaction
+        /// </summary>
+        /// <returns> New receipt </returns>
+        private Receipt CreateTransactionReceipt()
+        {
+            var receipt = new Receipt();
+            receipt.Id = _salesTransaction.Id;
+            receipt.TransactionDate = _salesTransaction.TransactionDate;
+            receipt.LineItems = new List<LineItem>();
             return receipt;
         }
     }

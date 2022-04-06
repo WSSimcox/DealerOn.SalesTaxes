@@ -119,6 +119,7 @@ namespace DealerOn.SalesTaxes.Services.Tests
         {
             var service = new ProductServices(new ProductInMemoryRepository());
 
+            // Creating two products for testing
             Product productOne = new Product()
             {
                 Id = Guid.Parse("6297d114-6c99-4bdd-a0e5-2ab691b858a5"),
@@ -139,6 +140,7 @@ namespace DealerOn.SalesTaxes.Services.Tests
                 IsImported = true
             };
 
+            // Adding products to service
             service.AddProduct(productOne);
             service.AddProduct(productTwo);
 

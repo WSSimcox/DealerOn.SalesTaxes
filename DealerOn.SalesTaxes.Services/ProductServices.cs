@@ -12,17 +12,30 @@ namespace DealerOn.SalesTaxes.Services
     {
         private readonly IProductRepository _productRepository;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="productRepository"></param>
         public ProductServices(IProductRepository productRepository)
         {
             _productRepository = productRepository;
         }
 
+        /// <summary>
+        /// This function is responsbile for adding a Product to our memory cache
+        /// </summary>
+        /// <param name="product"></param>
         public void AddProduct(Product product)
         {
             if (product != null)
                 _productRepository.AddProduct(product);
         }
 
+        /// <summary>
+        /// This function is responsible for removing a Product from our
+        /// memory cache
+        /// </summary>
+        /// <param name="product"></param>
         public void RemoveProduct(Product product)
         {
             try
@@ -32,6 +45,12 @@ namespace DealerOn.SalesTaxes.Services
             catch { return;  }
         }
 
+        /// <summary>
+        /// This function is responsbile for retrieving a Product from
+        /// our memory cache
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Product GetProductById(Guid id)
         {
             try
@@ -45,6 +64,11 @@ namespace DealerOn.SalesTaxes.Services
             }
         }
 
+        /// <summary>
+        /// This function is responsible for retrieving all Products from
+        /// our memory cache
+        /// </summary>
+        /// <returns> List of Products </returns>
         public IList<Product> GetProducts()
         {
             return _productRepository.GetProducts();

@@ -9,13 +9,52 @@ namespace DealerOn.SalesTaxes.Services.Tests
     [TestClass]
     public class TransactionServicesTest
     {
+        [TestInitialize]
+        public void Initialize()
+        {
+            var productRepo = new ProductInMemoryRepository();
+
+            // Creating two test products
+            Product productOne = new Product()
+            {
+                Id = Guid.Parse("6297d114-6c99-4bdd-a0e5-2ab691b858a5"),
+                Name = "TestProductOne",
+                Type = ProductType.Other,
+                Description = "Test Product from ProductRepositoryFiller()",
+                Price = 47.50M,
+                IsImported = true
+            };
+
+            Product productTwo = new Product()
+            {
+                Id = Guid.Parse("83fefeaa-8154-43bd-9ca8-30e5fabc1385"),
+                Name = "TestProductTwo",
+                Type = ProductType.Food,
+                Description = "Test Product from ProductRepositoryFiller()",
+                Price = 10.00M,
+                IsImported = true
+            };
+
+            // Adding products that we created
+            productRepo.AddProduct(productOne);
+            productRepo.AddProduct(productTwo);
+        }
+
         /// <summary>
         /// Test method for AddProduct()
         /// </summary>
         [TestMethod]
         public void AddProductTest()
         {
-            var service = new TransactionServices(ProductRepositoryFiller(), CalculatorFiller());
+            // Initializing ProductInMemoryRepository
+            var productRepo = new ProductInMemoryRepository();
+
+            // Initializing TransactionServices
+            var transaction = new TransactionServices(productRepo, CalculatorFiller());
+
+            // Adding LineItems to transaction
+            transaction.AddLineItem(productRepo.GetProductById(Guid.Parse("6297d114-6c99-4bdd-a0e5-2ab691b858a5")));
+            transaction.AddLineItem(productRepo.GetProductById(Guid.Parse("83fefeaa-8154-43bd-9ca8-30e5fabc1385")));
 
             Product productThree = new Product()
             {
@@ -27,16 +66,14 @@ namespace DealerOn.SalesTaxes.Services.Tests
                 IsImported = true
             };
 
-            // Initializing receipt
-            var receipt = service.GenerateReceipt();
-
-            Assert.IsNotNull(receipt);
+            // Adding to ProductMemory
+            productRepo.AddProduct(productThree);
 
             // Adding productThree to transaction
-            service.AddProduct(productThree);
+            transaction.AddLineItem(productThree);
 
             // Updating receipt
-            receipt = service.GenerateReceipt();
+            var receipt = transaction.GenerateReceipt();
 
             Assert.IsTrue(receipt.LineItems?.Count == 3);
         }
@@ -47,29 +84,30 @@ namespace DealerOn.SalesTaxes.Services.Tests
         [TestMethod]
         public void RemoveProductTest()
         {
-            var service = new TransactionServices(ProductRepositoryFiller(), CalculatorFiller());
+            // Initializing ProductInMemoryRepository
+            var productRepo = new ProductInMemoryRepository();
 
-            Product productThree = new Product()
-            {
-                Id = Guid.Parse("f22cab50-7f1c-4666-8eb0-76fb2fda1f9d"),
-                Name = "TestProductTwo",
-                Type = ProductType.Other,
-                Description = "Test Product for RemoveProductTest()",
-                Price = 5.00M,
-                IsImported = true
-            };
+            // Initializing TransactionServices
+            var transaction = new TransactionServices(productRepo, CalculatorFiller());
 
-            // Adding productThree to transaction
-            service.AddProduct(productThree);
+            // Adding LineItems to transaction
+            transaction.AddLineItem(productRepo.GetProductById(Guid.Parse("6297d114-6c99-4bdd-a0e5-2ab691b858a5")));
+            transaction.AddLineItem(productRepo.GetProductById(Guid.Parse("83fefeaa-8154-43bd-9ca8-30e5fabc1385")));
 
             // Initializing receipt
-            var receipt = service.GenerateReceipt();
+            var receipt = transaction.GenerateReceipt();
 
+            // Checking if everything is added
             Assert.IsTrue(receipt.LineItems?.Count == 2);
 
-            service.RemoveProduct(productThree);
+            // Removing LineItem
+            transaction.RemoveLineItem(Guid.Parse("83fefeaa-8154-43bd-9ca8-30e5fabc1385"));
 
-            Assert.IsTrue(receipt.LineItems?.Count == 2);
+            // Updating Receipt
+            receipt = transaction.GenerateReceipt();
+
+            // Checking if LineItem was removed
+            Assert.IsTrue(receipt.LineItems?.Count == 1);
         }
 
         /// <summary>
@@ -78,50 +116,24 @@ namespace DealerOn.SalesTaxes.Services.Tests
         [TestMethod]
         public void GenerateReceiptTest()
         {
-            var service = new TransactionServices(ProductRepositoryFiller(), CalculatorFiller());
+            // Initializing ProductInMemoryRepository
+            var productRepo = new ProductInMemoryRepository();
+
+            // Initializing TransactionServices
+            var transaction = new TransactionServices(productRepo, CalculatorFiller());
+
+            // Adding LineItems to transaction
+            transaction.AddLineItem(productRepo.GetProductById(Guid.Parse("6297d114-6c99-4bdd-a0e5-2ab691b858a5")));
+            transaction.AddLineItem(productRepo.GetProductById(Guid.Parse("83fefeaa-8154-43bd-9ca8-30e5fabc1385")));
 
             // Initializing receipt
-            var receipt = service.GenerateReceipt();
+            var receipt = transaction.GenerateReceipt();
 
+            // Checking if LineItems are inside Transaction
             Assert.IsNotNull(receipt);
             Assert.IsTrue(receipt.LineItems?.Count == 2);
-        }
-
-        /// <summary>
-        /// This helper function creates and returns a ProductRepository
-        /// for testing the above functions
-        /// </summary>
-        /// <returns> Filled ProductRepository </returns>
-        public IProductRepository ProductRepositoryFiller()
-        {
-            var repo = new ProductInMemoryRepository();
-
-            // Creating two test products
-            Product productOne = new Product()
-            {
-                Id = Guid.Parse("6297d114-6c99-4bdd-a0e5-2ab691b858a5"),
-                Name = "TestProductOne",
-                Type = ProductType.Other,
-                Description = "Test Product from ProductRepositoryFiller()",
-                Price = 10.50M,
-                IsImported = false
-            };
-
-            Product productTwo = new Product()
-            {
-                Id = Guid.Parse("83fefeaa-8154-43bd-9ca8-30e5fabc1385"),
-                Name = "TestProductTwo",
-                Type = ProductType.Other,
-                Description = "Test Product from ProductRepositoryFiller()",
-                Price = 5.00M,
-                IsImported = true
-            };
-
-            // Adding products that we created
-            repo.AddProduct(productOne);
-            repo.AddProduct(productTwo);
-
-            return repo;
+            Assert.IsTrue(receipt.TotalTax == 7.65M);
+            Assert.IsTrue(receipt.TotalCost == 65.15M);
         }
 
         /// <summary>
@@ -129,7 +141,7 @@ namespace DealerOn.SalesTaxes.Services.Tests
         /// One being for Sales Tax and the other for Import tax
         /// </summary>
         /// <returns> Array of Calculators </returns>
-        public ITaxCalculatorServices[] CalculatorFiller()
+        private ITaxCalculatorServices[] CalculatorFiller()
         {
             ITaxCalculatorServices[] calcArray = new ITaxCalculatorServices[2]; 
 
@@ -141,5 +153,6 @@ namespace DealerOn.SalesTaxes.Services.Tests
 
             return calcArray;
         }
+
     }
 }

@@ -9,8 +9,14 @@ namespace DealerOn.SalesTaxes.Data
 {
     public class ProductTaxRepository : IProductTaxRepository
     {
+        // Tax rates
         private readonly double _basicTaxRate = 0.10;
         private readonly double _importTaxRate = 0.5;
+
+        /// <summary>
+        /// Returns a mapped list of taxRates to their productTypes (enum)
+        /// </summary>
+        /// <returns></returns>
         public IList<Tuple<ProductType, decimal>> GetTaxRates()
         {
             var taxMap = new List<Tuple<ProductType, decimal>>();
