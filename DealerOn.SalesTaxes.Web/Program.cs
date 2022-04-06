@@ -5,16 +5,23 @@ using Microsoft.Extensions.DependencyInjection;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+IProductRepository productRepository = new ProductInMemoryRepository();
+
+var salesCalc = new SalesTaxCalculatorServices(new ProductTaxRepository());
+var importCalc = new ImportTaxCalculatorServices();
+
+ITaxCalculatorServices[] calcArray = new ITaxCalculatorServices[2];
+calcArray[0] = salesCalc;
+calcArray[1] = importCalc;
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddSingleton<IProductRepository>();
-builder.Services.AddSingleton<IProductTaxRepository>();
-builder.Services.AddSingleton<ITaxCalculatorServices>(builder => new ImportTaxCalculatorServices());
+builder.Services.AddSingleton<IProductRepository>(productRepository);
+builder.Services.AddSingleton<IProductTaxRepository>(new ProductTaxRepository());
+builder.Services.AddScoped<ITaxCalculatorServices>(builder => new ImportTaxCalculatorServices());
 builder.Services.AddScoped<ITaxCalculatorServices>(builder => new SalesTaxCalculatorServices(new ProductTaxRepository()));
-builder.Services.AddSingleton<ITransactionServices>();
-builder.Services.AddSingleton<IProductServices>();
-
+builder.Services.AddSingleton<ITransactionServices>(new TransactionServices(new ProductInMemoryRepository(), calcArray));
+builder.Services.AddSingleton<IProductServices>(new ProductServices(productRepository));
 
 var app = builder.Build();
 

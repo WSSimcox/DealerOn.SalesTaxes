@@ -25,9 +25,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\components\TestPage.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DealerOn.SalesTax.Data\DealerOn.SalesTaxes.Data.csproj" />
     <ProjectReference Include="..\DealerOn.SalesTaxes.Services\DealerOn.SalesTaxes.Services.csproj" />
     <ProjectReference Include="..\DealerOn.SalesTax\DealerOn.SalesTaxes.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ClientApp\src\assets\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\components\TestPage.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
