@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 // Components
+import Navbar from './Navbar/Navbar';
 import Item from './Item/Item';
 import Cart from './Cart/Cart';
 import Drawer from '@material-ui/core/Drawer';
@@ -31,7 +32,6 @@ const App = () => {
     'products',
     getProducts
   );
-  console.log(data);
 
   const getTotalItems = (items: CartItemType[]) =>
     items.reduce((ack: number, item) => ack + item.amount, 0);

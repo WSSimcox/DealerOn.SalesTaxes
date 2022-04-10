@@ -1,6 +1,7 @@
 ﻿using DealerOn.SalesTaxes.Data;
 using DealerOn.SalesTaxes.Models;
 using DealerOn.SalesTaxes.Models.Exceptions;
+using DealerOn.SalesTaxes.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DealerOn.SalesTaxes.Web.Controllers
@@ -9,7 +10,7 @@ namespace DealerOn.SalesTaxes.Web.Controllers
     [Route("api/v1/product")]
     public class ProductController : ControllerBase
     {
-        private readonly ProductInMemoryRepository _productInMemoryRepository;
+        private readonly ProductServices _productServices;
 
         /// <summary>
         /// Gets Product from memory cache using specific id
@@ -20,7 +21,7 @@ namespace DealerOn.SalesTaxes.Web.Controllers
         [Route("{id}")]
         public IActionResult GetProductById(Guid id)
         {
-            var result = _productInMemoryRepository.GetProductById(id);
+            var result = _productServices.GetProductById(id);
 
             if (result == null)
                 return NotFound();
@@ -35,7 +36,7 @@ namespace DealerOn.SalesTaxes.Web.Controllers
         [HttpGet]
         public IActionResult GetProducts()
         {
-            var result = _productInMemoryRepository.GetProducts();
+            var result = _productServices.GetProducts();
             
             if (result == null)
                 return NotFound();
@@ -54,7 +55,7 @@ namespace DealerOn.SalesTaxes.Web.Controllers
             if (product == null)
                 return BadRequest();
 
-            _productInMemoryRepository.AddProduct(product);
+            _productServices.AddProduct(product);
             return Ok();
         }
 
@@ -62,13 +63,37 @@ namespace DealerOn.SalesTaxes.Web.Controllers
         /// Removes product from Product memory cache
         /// </summary>
         /// <param name="product"></param>
-        /// <returns></returns>
+        /// <returns> IActionResult status </returns>
         [HttpDelete]
         public IActionResult RemoveProduct(Guid id)
         {
             try
             {
-                _productInMemoryRepository.RemoveProduct(id);
+                _productServices.RemoveProduct(id);
+                return Ok();
+            }
+            catch (NotFoundException nex)
+            {
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                //Returns the exception and message description
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Updates a product in Product memory cache
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns> IActionResult status </returns>
+        [HttpPut]
+        public IActionResult UpdateProduct(Product product)
+        {
+            try
+            {
+                _productServices.UpdateProduct(product);
                 return Ok();
             }
             catch (NotFoundException nex)

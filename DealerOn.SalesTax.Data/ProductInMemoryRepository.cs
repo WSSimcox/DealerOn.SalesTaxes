@@ -51,6 +51,23 @@ namespace DealerOn.SalesTaxes.Data
                 }
             }
         }
+        
+        /// <summary>
+        /// This function is responsible for updating a product in our memory
+        /// cache of products
+        /// </summary>
+        /// <param name="product"></param>
+        public void UpdateProduct(Product product)
+        {
+            // Establishing lock for thread safety
+            lock (_lock)
+            {
+                if (productCache.ContainsKey(product.Id))
+                {
+                    productCache[product.Id] = product;
+                }
+            }
+        }
 
         /// <summary>
         /// This function is responsbile for retrieving a product with a given

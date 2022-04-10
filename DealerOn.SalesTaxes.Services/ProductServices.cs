@@ -36,13 +36,27 @@ namespace DealerOn.SalesTaxes.Services
         /// memory cache
         /// </summary>
         /// <param name="product"></param>
-        public void RemoveProduct(Product product)
+        public void RemoveProduct(Guid id)
         {
             try
             {
-                _productRepository.RemoveProduct(product.Id);
+                _productRepository.RemoveProduct(id);
             }
             catch { return;  }
+        }
+
+        /// <summary>
+        /// This function is responsible for removing a Product from
+        /// our memory cache
+        /// </summary>
+        /// <param name="product"></param>
+        public void UpdateProduct(Product product)
+        {
+            try
+            {
+                _productRepository.UpdateProduct(product);
+            }
+            catch { return; }
         }
 
         /// <summary>

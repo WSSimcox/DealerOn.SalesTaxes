@@ -87,6 +87,47 @@ namespace DealerOn.SalesTaxes.Services.Tests
         }
 
         /// <summary>
+        /// Test method for UpdateProduct()
+        /// </summary>
+        [TestMethod]
+        public void UpdateProductTest()
+        {
+            var service = new ProductServices(new ProductInMemoryRepository());
+
+            // Creating a test product
+            Product product = new Product()
+            {
+                Id = Guid.Parse("6297d114-6c99-4bdd-a0e5-2ab691b858a5"),
+                Name = "TestProduct",
+                Type = ProductType.Other,
+                Description = "Test Product for UpdateProductTest()",
+                Price = 10.50M,
+                IsImported = false
+            };
+
+            // Adding product that we created
+            service.AddProduct(product);
+
+            product.Name = "UpdatedTestProduct";
+            product.Type = ProductType.Food;
+            product.Description = "Updated Test Product for UpdateProductTest()";
+            product.Price = 11.00M;
+            product.IsImported = true;
+
+            // Updating product
+            service.UpdateProduct(product);
+
+            var returnedProduct = service.GetProductById(product.Id);
+
+            Assert.IsNotNull(returnedProduct);
+            Assert.IsTrue(returnedProduct.Name == "UpdatedTestProduct");
+            Assert.IsTrue(returnedProduct.Type == ProductType.Food);
+            Assert.IsTrue(returnedProduct.Description == "Updated Test Product for UpdateProductTest()");
+            Assert.IsTrue(returnedProduct.Price == 11.00M);
+            Assert.IsTrue(returnedProduct.IsImported);
+        }
+
+        /// <summary>
         /// Test method for GetProductsById()
         /// </summary>
         [TestMethod]

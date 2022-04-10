@@ -23,7 +23,7 @@ namespace DealerOn.SalesTaxes.Data.Tests
                 Id = Guid.Parse("6297d114-6c99-4bdd-a0e5-2ab691b858a5"),
                 Name = "TestProduct",
                 Type = ProductType.Other,
-                Description = "Test Product for ProductInMemoryRepository()",
+                Description = "Test Product for AddProductTest()",
                 Price = 10.50M,
                 IsImported = false
             };
@@ -63,7 +63,7 @@ namespace DealerOn.SalesTaxes.Data.Tests
                 Id = Guid.Parse("6297d114-6c99-4bdd-a0e5-2ab691b858a5"),
                 Name = "TestProduct",
                 Type = ProductType.Other,
-                Description = "Test Product for ProductInMemoryRepository()",
+                Description = "Test Product for RemoveProductTest()",
                 Price = 10.50M,
                 IsImported = false
             };
@@ -86,6 +86,47 @@ namespace DealerOn.SalesTaxes.Data.Tests
 
             // Checking if productOne was removed 
             Assert.IsFalse(returnedList.Contains(product));
+        }
+
+        /// <summary>
+        /// Test method for UpdateProduct()
+        /// </summary>
+        [TestMethod]
+        public void UpdateProductTest()
+        {
+            var repo = new ProductInMemoryRepository();
+
+            // Creating a test product
+            Product product = new Product()
+            {
+                Id = Guid.Parse("6297d114-6c99-4bdd-a0e5-2ab691b858a5"),
+                Name = "TestProduct",
+                Type = ProductType.Other,
+                Description = "Test Product for UpdateProductTest()",
+                Price = 10.50M,
+                IsImported = false
+            };
+
+            // Adding product that we created
+            repo.AddProduct(product);
+
+            product.Name = "UpdatedTestProduct";
+            product.Type = ProductType.Food;
+            product.Description = "Updated Test Product for UpdateProductTest()";
+            product.Price = 11.00M;
+            product.IsImported = true;
+
+            // Updating product
+            repo.UpdateProduct(product);
+
+            var returnedProduct = repo.GetProductById(product.Id);
+
+            Assert.IsNotNull(returnedProduct);
+            Assert.IsTrue(returnedProduct.Name == "UpdatedTestProduct");
+            Assert.IsTrue(returnedProduct.Type == ProductType.Food);
+            Assert.IsTrue(returnedProduct.Description == "Updated Test Product for UpdateProductTest()");
+            Assert.IsTrue(returnedProduct.Price == 11.00M);
+            Assert.IsTrue(returnedProduct.IsImported);
         }
 
         /// <summary>
