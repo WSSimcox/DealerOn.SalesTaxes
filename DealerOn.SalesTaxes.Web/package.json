@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/icons": "^4.11.3",
+    "@types/styled-components": "^5.1.25",
+    "react-query": "^3.34.19",
+    "styled-components": "^5.3.5"
+  }
+}
