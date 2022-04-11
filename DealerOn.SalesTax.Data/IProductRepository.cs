@@ -20,6 +20,13 @@ namespace DealerOn.SalesTaxes.Data
         void RemoveProduct(Guid id);
 
         /// <summary>
+        /// This function is responsible for updating a product in our memory
+        /// cache of products
+        /// </summary>
+        /// <param name="product"></param>
+        void UpdateProduct(Product product);
+
+        /// <summary>
         /// This function is responsbile for retrieving a product with a given
         /// specified id
         /// </summary>
