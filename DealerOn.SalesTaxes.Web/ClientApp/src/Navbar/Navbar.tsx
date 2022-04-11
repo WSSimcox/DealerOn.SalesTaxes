@@ -1,6 +1,5 @@
 // Styles
 import { Wrapper } from './Navbar.styles';
-//import logo from 'images/DealerOn.png'
 
 const Navbar = () => {
     return (

@@ -7,9 +7,16 @@ export const Wrapper = styled.div`
   margin: 40px;
 `;
 
-export const StyledButton = styled(IconButton)`
+export const StyledCartButton = styled(IconButton)`
   position: fixed;
   z-index: 100;
-  right: 20px;
+  right: 10px;
+  top: 10px;
+`;
+
+export const StyledAddButton = styled(IconButton)`
+  position: fixed;
+  z-index: 100;
+  right: 60px;
   top: 10px;
 `;
