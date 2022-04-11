@@ -7,7 +7,7 @@ import Cart from './Cart/Cart';
 import Drawer from '@material-ui/core/Drawer';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Grid from '@material-ui/core/Grid';
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Badge from '@material-ui/core/Badge';
 // Styles
 import { Wrapper, StyledButton } from './App.styles';
@@ -71,6 +71,7 @@ const App = () => {
 
   return (
     <Wrapper>
+      <Navbar></Navbar>
       <Drawer anchor='right' open={cartOpen} onClose={() => setCartOpen(false)}>
         <Cart
           cartItems={cartItems}
@@ -80,7 +81,7 @@ const App = () => {
       </Drawer>
       <StyledButton onClick={() => setCartOpen(true)}>
         <Badge badgeContent={getTotalItems(cartItems)} color='error'>
-          <AddShoppingCartIcon />
+          <ShoppingCartIcon />
         </Badge>
       </StyledButton>
       <Grid container spacing={3}>

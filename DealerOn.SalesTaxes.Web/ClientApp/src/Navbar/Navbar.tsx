@@ -1,12 +1,11 @@
 // Styles
 import { Wrapper } from './Navbar.styles';
-import logo from '../Assets/DealerOn.png'
+//import logo from 'images/DealerOn.png'
 
 const Navbar = () => {
-    <Wrapper>
-        
-    </Wrapper>
-    return <img src={logo} alt="Logo" />;
+    return (
+        <Wrapper><img src="images/DealerOn.png" alt="Logo"/></Wrapper>
+    );
 }
 
 export default Navbar;
