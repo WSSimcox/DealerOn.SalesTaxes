@@ -8,11 +8,10 @@ import Drawer from '@material-ui/core/Drawer';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Grid from '@material-ui/core/Grid';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import AddBoxIcon from '@material-ui/icons/AddBox';
 import Badge from '@material-ui/core/Badge';
+import AddBox from '@material-ui/icons/AddBox';
 // Styles
 import { Wrapper, StyledCartButton, StyledAddButton } from './App.styles';
-import { AddBox } from '@material-ui/icons';
 // Types
 export type SalesTransactionType = {
   id: string;

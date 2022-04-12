@@ -1,4 +1,5 @@
 using DealerOn.SalesTaxes.Data;
+using DealerOn.SalesTaxes.Models;
 using DealerOn.SalesTaxes.Services;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -23,7 +24,14 @@ builder.Services.AddScoped<ITaxCalculatorServices>(builder => new SalesTaxCalcul
 builder.Services.AddSingleton<ITransactionServices>(new TransactionServices(new ProductInMemoryRepository(), calcArray));
 builder.Services.AddSingleton<IProductServices>(new ProductServices(productRepository));
 
+builder.Services.AddCors();
+
 var app = builder.Build();
+
+app.UseCors(p => p.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:44401")) ;
+
+// Adding basic starter products
+productRepository.DefaultProductFiller();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -43,6 +51,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
 
-app.MapFallbackToFile("index.html"); ;
+//app.MapFallbackToFile("index.html"); ;
 
 app.Run();

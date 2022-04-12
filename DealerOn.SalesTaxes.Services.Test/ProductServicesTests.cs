@@ -77,7 +77,7 @@ namespace DealerOn.SalesTaxes.Services.Tests
             Assert.IsNotNull(returnedProduct);
 
             // Removing Product via service
-            service.RemoveProduct(product);
+            service.RemoveProduct(product.Id);
 
             // Updating returnedProduct
             returnedProduct = service.GetProductById(product.Id);

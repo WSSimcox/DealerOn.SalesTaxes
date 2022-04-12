@@ -1,8 +1,9 @@
 import Button from '@material-ui/core/Button';
+import ClearButton from '@material-ui/icons/Clear';
 // Types
 import { ProductType, ProductEnumType } from '../App';
 // Styles
-import { Wrapper } from './Product.styles';
+import { Wrapper, StyledClearButton } from './Product.styles';
 
 type Props = {
   product: ProductType;
@@ -31,6 +32,9 @@ function renderSwitch(param: ProductType) {
 
 const Product: React.FC<Props> = ({ product, handleAddToCart }) => (
   <Wrapper>
+    <StyledClearButton>
+      <ClearButton />
+    </StyledClearButton>
     {renderSwitch(product)}
     <div>
       <h3>{product.name}</h3>

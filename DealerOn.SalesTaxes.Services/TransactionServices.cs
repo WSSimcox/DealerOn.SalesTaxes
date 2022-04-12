@@ -118,10 +118,13 @@ namespace DealerOn.SalesTaxes.Services
         /// <summary>
         /// This function is responsible for generating a Receipt object
         /// </summary>
-        /// <returns></returns>
-        public Receipt GenerateReceipt()
+        /// <returns> Receiept </returns>
+        public Receipt GenerateReceipt(SalesTransaction? salesTransaction = null)
         {
             var receipt = CreateTransactionReceipt();
+
+            if (salesTransaction != null)
+                _salesTransaction = salesTransaction;
 
             if (_salesTransaction.LineItems == null)
                 return receipt;
@@ -129,6 +132,9 @@ namespace DealerOn.SalesTaxes.Services
             // Iterating through each LineItem in the transaction
             foreach (var item in _salesTransaction.LineItems)
             {
+                // Saftey to check if provided product is correct product in cache
+                item.Product = _productRepository.GetProductById(item.Product.Id);
+
                 var calcVals = new List<CalculatedValue>();
 
                 // Making price the starting TotalCost

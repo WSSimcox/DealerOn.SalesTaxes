@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import IconButton from '@material-ui/core/IconButton';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -25,4 +26,9 @@ export const Wrapper = styled.div`
     padding: 1rem;
     height: 100%;
   }
+`;
+
+export const StyledClearButton = styled(IconButton)`
+  position: absolute;
+  right: 70px;
 `;

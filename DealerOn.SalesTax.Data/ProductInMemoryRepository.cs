@@ -89,5 +89,76 @@ namespace DealerOn.SalesTaxes.Data
         {
             return productCache.Values.ToList();
         }
+
+        /// <summary>
+        /// This function is responsible for filling the cache with some basic
+        /// starter items.
+        /// </summary>
+        public void DefaultProductFiller()
+        {
+            // Default starter products
+            AddProduct(new Product()
+            {
+                Id = Guid.NewGuid(),
+                Name = "DealerOn Book",
+                Description = "An awesome book!",
+                Price = 12.49M,
+                IsImported = false,
+                Type = ProductType.Book
+            });
+
+            AddProduct(new Product()
+            {
+                Id = Guid.NewGuid(),
+                Name = "DealerOn Music CD",
+                Description = "An awesome CD!",
+                Price = 14.99M,
+                IsImported = false,
+                Type = ProductType.Other
+            });
+
+            AddProduct(new Product()
+            {
+                Id = Guid.NewGuid(),
+                Name = "DealerOn Chocolate Bar",
+                Description = "A chocolate bar with the taste of a new car's smell.",
+                Price = 0.85M,
+                IsImported = false,
+                Type = ProductType.Food
+            });
+
+            AddProduct(new Product()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Imported DealerOn Box of Chocolates",
+                Description = "Gourmet chocolate bar features creamy, smooth milk chocolate for a classic, sweet indulgence.",
+                Price = 10.00M,
+                IsImported = true,
+                Type = ProductType.Food
+            });
+
+            AddProduct(new Product()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Imported Bottle of DealerOn Perfume",
+                Description = "A handcrafted perfume with the scent of new car smell.",
+                Price = 47.50M,
+                IsImported = true,
+                Type = ProductType.Other
+            });
+
+            AddProduct(new Product()
+            {
+                Id = Guid.NewGuid(),
+                Name = "DealerOn's Packet of headache pills",
+                Description = "PAIN RELIEVER AND FEVER REDUCER: Proven pain relief without" +
+                " a prescription for tough pain such as muscular aches, minor arthritis pain," +
+                " toothache, backache, menstrual cramps or minor aches and pains from the common" +
+                " cold; also temporarily reduces fever.",
+                Price = 9.75M,
+                IsImported = false,
+                Type = ProductType.Medical
+            });
+        }
     }
 }
