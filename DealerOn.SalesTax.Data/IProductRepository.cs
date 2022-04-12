@@ -40,5 +40,11 @@ namespace DealerOn.SalesTaxes.Data
         /// </summary>
         /// <returns> List of all products in memory cache of products </returns>
         IList<Product> GetProducts();
+
+        /// <summary>
+        /// This function is responsible for filling the cache with some basic
+        /// starter items.
+        /// </summary>
+        void DefaultProductFiller();
     }
 }

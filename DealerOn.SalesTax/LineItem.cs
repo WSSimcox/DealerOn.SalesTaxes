@@ -30,6 +30,7 @@ namespace DealerOn.SalesTaxes.Models
 
         /// <summary>
         /// List of CalulatedValues for tax purposes
+        /// Currently Deprecated...
         /// </summary>
         public IList<CalculatedValue> ComputedValue { get; set; }
     }

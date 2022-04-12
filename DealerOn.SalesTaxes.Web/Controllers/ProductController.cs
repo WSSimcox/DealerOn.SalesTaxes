@@ -10,7 +10,16 @@ namespace DealerOn.SalesTaxes.Web.Controllers
     [Route("api/v1/product")]
     public class ProductController : ControllerBase
     {
-        private readonly ProductServices _productServices;
+        private readonly IProductServices _productServices;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="productServices"></param>
+        public ProductController(IProductServices productServices)
+        {
+            _productServices = productServices;
+        }
 
         /// <summary>
         /// Gets Product from memory cache using specific id
@@ -65,6 +74,7 @@ namespace DealerOn.SalesTaxes.Web.Controllers
         /// <param name="product"></param>
         /// <returns> IActionResult status </returns>
         [HttpDelete]
+        [Route("{id}")]
         public IActionResult RemoveProduct(Guid id)
         {
             try

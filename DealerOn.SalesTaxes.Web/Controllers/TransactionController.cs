@@ -1,5 +1,6 @@
 ﻿using DealerOn.SalesTaxes.Models;
 using DealerOn.SalesTaxes.Models.Exceptions;
+using DealerOn.SalesTaxes.Models.Transactions;
 using DealerOn.SalesTaxes.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,10 +25,10 @@ namespace DealerOn.SalesTaxes.Web.Controllers
         /// Retrieves a generated Receipt
         /// </summary>
         /// <returns> IActionResult status </returns>
-        [HttpGet]
-        public IActionResult GetTransactionReciept()
+        [HttpPost]
+        public IActionResult CreateTransactionReciept(SalesTransaction salesTransaction)
         {
-            var result = _transactionServices.GenerateReceipt();
+            var result = _transactionServices.GenerateReceipt(salesTransaction);
 
             if (result == null)
                 return NotFound();
