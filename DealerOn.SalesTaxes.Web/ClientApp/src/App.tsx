@@ -109,7 +109,7 @@ const App = () => {
         />
       </Drawer>
       <NewProductDialog/>
-      {/* TODO: FIX to be like NewProductDialog */}
+      {/* Two options */}
       <StyledCartButton onClick={() => setCartOpen(true)}>
         <Badge badgeContent={getTotalProducts(cartProducts)} color='error'>
           <ShoppingCartIcon />
