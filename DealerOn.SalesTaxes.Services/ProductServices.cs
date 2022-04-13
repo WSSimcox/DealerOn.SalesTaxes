@@ -29,7 +29,7 @@ namespace DealerOn.SalesTaxes.Services
         {
             if (product != null)
             {
-                product.Id = Guid.NewGuid(); ;
+                product.Id = Guid.NewGuid();
 
                 _productRepository.AddProduct(product);
             }

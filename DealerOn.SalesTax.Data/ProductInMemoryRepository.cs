@@ -30,6 +30,10 @@ namespace DealerOn.SalesTaxes.Data
             {
                 if (!productCache.ContainsKey(product.Id))
                 {
+                    // if imported then add to name
+                    if (product.IsImported)
+                        product.Name = "Imported " + product.Name;
+
                     productCache.Add(product.Id, product);
                 }
             }
@@ -120,8 +124,8 @@ namespace DealerOn.SalesTaxes.Data
             AddProduct(new Product()
             {
                 Id = Guid.NewGuid(),
-                Name = "DealerOn Chocolate Bar",
-                Description = "A chocolate bar with the taste of a new car's smell.",
+                Name = "DealerOn's Chocolate Bar",
+                Description = "An artisan chocolate bar.",
                 Price = 0.85M,
                 IsImported = false,
                 Type = ProductType.Food
@@ -130,8 +134,18 @@ namespace DealerOn.SalesTaxes.Data
             AddProduct(new Product()
             {
                 Id = Guid.NewGuid(),
-                Name = "Imported DealerOn Box of Chocolates",
-                Description = "Gourmet chocolate bar features creamy, smooth milk chocolate for a classic, sweet indulgence.",
+                Name = "DealerOn's Packet of headache pills",
+                Description = "Pain reliever and fever reducer.",
+                Price = 9.75M,
+                IsImported = false,
+                Type = ProductType.Medical
+            });
+
+            AddProduct(new Product()
+            {
+                Id = Guid.NewGuid(),
+                Name = "DealerOn Box of Chocolates",
+                Description = "Gourmet chocolates that feature creamy, smooth milk chocolate for a classic, sweet indulgence.",
                 Price = 10.00M,
                 IsImported = true,
                 Type = ProductType.Food
@@ -140,24 +154,11 @@ namespace DealerOn.SalesTaxes.Data
             AddProduct(new Product()
             {
                 Id = Guid.NewGuid(),
-                Name = "Imported Bottle of DealerOn Perfume",
+                Name = "Bottle of DealerOn Perfume",
                 Description = "A handcrafted perfume with the scent of new car smell.",
                 Price = 47.50M,
                 IsImported = true,
                 Type = ProductType.Other
-            });
-
-            AddProduct(new Product()
-            {
-                Id = Guid.NewGuid(),
-                Name = "DealerOn's Packet of headache pills",
-                Description = "PAIN RELIEVER AND FEVER REDUCER: Proven pain relief without" +
-                " a prescription for tough pain such as muscular aches, minor arthritis pain," +
-                " toothache, backache, menstrual cramps or minor aches and pains from the common" +
-                " cold; also temporarily reduces fever.",
-                Price = 9.75M,
-                IsImported = false,
-                Type = ProductType.Medical
             });
         }
     }
