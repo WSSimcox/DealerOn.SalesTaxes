@@ -10,10 +10,6 @@ export const Wrapper = styled.div`
   border-radius: 20px;
   height: 100%;
 
-  button {
-    border-radius: 0 0 20px 20px;
-  }
-
   img {
     height: 256px;
     padding-top: 20px;
@@ -26,9 +22,11 @@ export const Wrapper = styled.div`
     padding: 1rem;
     height: 100%;
   }
+
+  #deleteContainer {
+    text-align: right;
+  }
 `;
 
-export const StyledClearButton = styled(IconButton)`
-  position: absolute;
-  right: 70px;
+export const StyledDeleteButton = styled(IconButton)`
 `;

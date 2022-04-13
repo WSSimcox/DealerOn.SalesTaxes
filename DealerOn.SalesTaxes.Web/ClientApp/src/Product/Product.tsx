@@ -1,27 +1,28 @@
 import Button from '@material-ui/core/Button';
-import ClearButton from '@material-ui/icons/Clear';
+import DeleteForever from '@material-ui/icons/DeleteForever';
 // Types
-import { ProductType, ProductEnumType } from '../App';
+import { Product, ProductType } from '../App';
 // Styles
-import { Wrapper, StyledClearButton } from './Product.styles';
+import { Wrapper, StyledDeleteButton } from './Product.styles';
 
 type Props = {
-  product: ProductType;
-  handleAddToCart: (clickedItem: ProductType) => void;
+  product: Product;
+  handleAddToCart: (clickedItem: Product) => void;
+  handleDeleteProduct: (clickedItem: Product) => void;
 };
 
-function renderSwitch(param: ProductType) {
+function renderSwitch(param: Product) {
   switch (param.type) {
-    case ProductEnumType.Other: {
+    case ProductType.Other: {
       return <img src="images/Other.png" alt={param.name} />
     }
-    case ProductEnumType.Book: {
+    case ProductType.Book: {
       return <img src="images/Book.png" alt={param.name} />
     }
-    case ProductEnumType.Food: {
+    case ProductType.Food: {
       return <img src="images/Food.png" alt={param.name} />
     }
-    case ProductEnumType.Medical: {
+    case ProductType.Medical: {
       return <img src="images/Medical.png" alt={param.name} />
     }
     default: {
@@ -30,11 +31,13 @@ function renderSwitch(param: ProductType) {
   }
 }
 
-const Product: React.FC<Props> = ({ product, handleAddToCart }) => (
+const ProductCard: React.FC<Props> = ({ product, handleAddToCart, handleDeleteProduct }) => (
   <Wrapper>
-    <StyledClearButton>
-      <ClearButton />
-    </StyledClearButton>
+    <div id="deleteContainer">
+      <StyledDeleteButton>
+        <DeleteForever onClick={() => handleDeleteProduct(product)}></DeleteForever>
+      </StyledDeleteButton>
+    </div>
     {renderSwitch(product)}
     <div>
       <h3>{product.name}</h3>
@@ -45,4 +48,4 @@ const Product: React.FC<Props> = ({ product, handleAddToCart }) => (
   </Wrapper>
 );
 
-export default Product;
+export default ProductCard;

@@ -1,27 +1,27 @@
 import Button from '@material-ui/core/Button';
 // Types
-import { ProductType, ProductEnumType } from '../App';
+import { Product, ProductType } from '../App';
 // Styles
 import { Wrapper } from './LineItem.styles';
 
 type Props = {
-  product: ProductType;
-  addToCart: (clickedItem: ProductType) => void;
+  product: Product;
+  addToCart: (clickedItem: Product) => void;
   removeFromCart: (id: string) => void;
 };
 
-function renderSwitch(param: ProductType) {
+function renderSwitch(param: Product) {
   switch (param.type) {
-    case ProductEnumType.Other: {
+    case ProductType.Other: {
       return <img src="images/Other.png" alt={param.name} />
     }
-    case ProductEnumType.Book: {
+    case ProductType.Book: {
       return <img src="images/Book.png" alt={param.name} />
     }
-    case ProductEnumType.Food: {
+    case ProductType.Food: {
       return <img src="images/Food.png" alt={param.name} />
     }
-    case ProductEnumType.Medical: {
+    case ProductType.Medical: {
       return <img src="images/Medical.png" alt={param.name} />
     }
     default: {

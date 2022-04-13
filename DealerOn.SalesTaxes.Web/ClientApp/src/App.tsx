@@ -2,66 +2,66 @@ import { useState } from 'react';
 import { useQuery } from 'react-query';
 // Components
 import Navbar from './Navbar/Navbar';
-import Item from './Product/Product';
+import ProductCard from './Product/Product';
 import Cart from './Cart/Cart';
-import Drawer from '@material-ui/core/Drawer';
+import NewProductDialog from './Product/NewProductDialog';
+// Material
+import Drawer from '@mui/material//Drawer';
+import Grid from '@mui/material/Grid';
+import Badge from '@mui/material/Badge';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import Grid from '@material-ui/core/Grid';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import Badge from '@material-ui/core/Badge';
-import AddBox from '@material-ui/icons/AddBox';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 // Styles
 import { Wrapper, StyledCartButton, StyledAddButton } from './App.styles';
 // Types
-export type SalesTransactionType = {
+export type SalesTransaction = {
   id: string;
   transactionDate: Date;
-  lineItems: LineItemType[];
+  lineItems: LineItem[];
 }
 
-export type ReceiptType = {
+export type Receipt = {
   totalTax: number;
   totalCost: number;
 }
 
-export type LineItemType = {
-  product: ProductType;
+export type LineItem = {
+  product: Product;
   quantity: number;
 }
 
-export type ProductType = {
+export type Product = {
   id: string;
   name: string;
-  type: ProductEnumType;
+  type: ProductType;
   description: string;
   price: number;
   amount: number;
 };
 
-export enum ProductEnumType {
+export enum ProductType {
   Other = 1,
   Book = 2,
   Food = 3,
   Medical = 4
 };
 
-const getProducts = async (): Promise<ProductType[]> =>
+const getProducts = async (): Promise<Product[]> =>
   await (await fetch('https://localhost:44301/api/v1/product')).json();
 
 const App = () => {
   const [cartOpen, setCartOpen] = useState(false);
-  const [cartProducts, setCartProducts] = useState([] as ProductType[]);
-  const { data, isLoading, error } = useQuery<ProductType[]>(
+  const [cartProducts, setCartProducts] = useState([] as Product[]);
+  const { data, isLoading, error } = useQuery<Product[]>(
     'products',
     getProducts
   );
 
-  const getTotalProducts = (items: ProductType[]) =>
+  const getTotalProducts = (items: Product[]) =>
     items.reduce((ack: number, item) => ack + item.amount, 0);
 
-  const handleAddToCatelog = (clickedItem: ProductType) => {
+  const handleAddToCart = (clickedItem: Product) => {
     setCartProducts(prev => {
-      // 1. Is the item already added in the cart?
       const isItemInCart = prev.find(item => item.id === clickedItem.id);
 
       if (isItemInCart) {
@@ -71,26 +71,15 @@ const App = () => {
             : item
         );
       }
-      // First time the item is added
       return [...prev, { ...clickedItem, amount: 1 }];
     });
   };
 
-  const handleAddToCart = (clickedItem: ProductType) => {
-    setCartProducts(prev => {
-      // 1. Is the item already added in the cart?
-      const isItemInCart = prev.find(item => item.id === clickedItem.id);
-
-      if (isItemInCart) {
-        return prev.map(item =>
-          item.id === clickedItem.id
-            ? { ...item, amount: item.amount + 1 }
-            : item
-        );
-      }
-      // First time the item is added
-      return [...prev, { ...clickedItem, amount: 1 }];
-    });
+  const handleDeleteProduct = (clickedItem: Product) => {
+    fetch('https://localhost:44301/api/v1/product/' + clickedItem.id, { method: 'DELETE'});
+    //Todo: find how to use state
+    window.location.reload();
+    return (null);
   };
 
   const handleRemoveFromCart = (id: string) => {
@@ -102,7 +91,7 @@ const App = () => {
         } else {
           return [...ack, item];
         }
-      }, [] as ProductType[])
+      }, [] as Product[])
     );
   };
 
@@ -119,9 +108,8 @@ const App = () => {
           removeFromCart={handleRemoveFromCart}
         />
       </Drawer>
-      <StyledAddButton onClick={() => setCartOpen(true)}>
-          <AddBox />
-      </StyledAddButton>
+      <NewProductDialog/>
+      {/* TODO: FIX to be like NewProductDialog */}
       <StyledCartButton onClick={() => setCartOpen(true)}>
         <Badge badgeContent={getTotalProducts(cartProducts)} color='error'>
           <ShoppingCartIcon />
@@ -130,7 +118,7 @@ const App = () => {
       <Grid container spacing={3}>
         {data?.map(item => (
           <Grid item key={item.id} xs={12} sm={4}>
-            <Item product={item} handleAddToCart={handleAddToCart} />
+            <ProductCard product={item} handleAddToCart={handleAddToCart} handleDeleteProduct={handleDeleteProduct} />
           </Grid>
         ))}
       </Grid>
