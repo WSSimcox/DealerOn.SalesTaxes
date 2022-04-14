@@ -36,6 +36,7 @@ export type Product = {
   type: ProductType;
   description: string;
   price: number;
+  isImported: boolean;
   amount: number;
 };
 

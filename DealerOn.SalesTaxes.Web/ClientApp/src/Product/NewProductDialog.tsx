@@ -21,13 +21,18 @@ import { StyledAddButton } from './../App.styles';
 
 export default function FormDialog() {
     const [open, setOpen] = React.useState(false);
-    const [product, setProduct] = React.useState({} as Product);
+    const [product, setProduct] = React.useState({ name: "Hello" } as Product);
     const handleClickOpen = () => {
         setOpen(true);
     };
 
     const handleClose = () => {
         setOpen(false);
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        product.name = e.currentTarget.value;
+        product.description = e.currentTarget.value;
     };
 
     const handleAdd = () => {
@@ -44,11 +49,6 @@ export default function FormDialog() {
         // Close the dialog
         setOpen(false);
     };
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = e.currentTarget.value;
-        //setRegister({ ...register, name: e.currentTarget.value })
-    }
     
     return (
         <div>
@@ -68,6 +68,8 @@ export default function FormDialog() {
                         id="productName"
                         label="Product Name"
                         required
+                        value={product.name}
+                        onChange={handleChange}
                     />
                     </FormControl>
                     <FormControl sx={{ mt: 2, minWidth: 120 } } fullWidth >
@@ -76,6 +78,8 @@ export default function FormDialog() {
                         id="productDescription"
                         label="Product Description"
                         fullWidth
+                        value={product.description}
+                        onChange={handleChange}
                     />
                     </FormControl>
                     <FormControl sx={{ mt:2, mr:1,width: '30%' }} >
@@ -93,15 +97,15 @@ export default function FormDialog() {
                     </Select>
                     </FormControl>
                     <FormControl sx={{ mt:2, mr:1, width: '30%' }} >
-                    <InputLabel id="lblProductType">Status</InputLabel>
+                    <InputLabel id="lblProductType" defaultValue={0}>Status</InputLabel>
                     <Select
                         id="productIsImported"
                         labelId="lblProductIsImported"
                         label="Status"
                         required
                     >
+                        <MenuItem value={0}>Local</MenuItem>
                         <MenuItem value={1}>Imported</MenuItem>
-                        <MenuItem value={2}>Local</MenuItem>
                     </Select>
                     </FormControl>
                     <FormControl sx={{ mt: 2, width: '37%' } }>

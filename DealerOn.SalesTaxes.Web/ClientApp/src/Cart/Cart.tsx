@@ -5,7 +5,7 @@ import { Wrapper } from './Cart.styles';
 import { Product } from '../App';
 // Material
 import Button from '@mui/material/Button';
-import TransactionReceipt from './Receipt/TransactionReceipt';
+import TransactionReceipt from './TransactionReceipt/TransactionReceipt';
 
 type Props = {
   products: Product[];
