@@ -1,4 +1,5 @@
 ﻿using DealerOn.SalesTaxes.Models;
+using DealerOn.SalesTaxes.Models.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -81,7 +82,15 @@ namespace DealerOn.SalesTaxes.Data
         /// <returns> Product with corresponding id if found </returns>
         public Product GetProductById(Guid id)
         {
-            return productCache[id];
+            try
+            {
+                return productCache[id];
+            }
+            catch 
+            {
+                throw new NotFoundException($"Product {id} not found.");
+            }
+            
         }
 
         /// <summary>
@@ -134,16 +143,6 @@ namespace DealerOn.SalesTaxes.Data
             AddProduct(new Product()
             {
                 Id = Guid.NewGuid(),
-                Name = "DealerOn's Packet of headache pills",
-                Description = "Pain reliever and fever reducer.",
-                Price = 9.75M,
-                IsImported = false,
-                Type = ProductType.Medical
-            });
-
-            AddProduct(new Product()
-            {
-                Id = Guid.NewGuid(),
                 Name = "DealerOn Box of Chocolates",
                 Description = "Gourmet chocolates that feature creamy, smooth milk chocolate for a classic, sweet indulgence.",
                 Price = 10.00M,
@@ -159,6 +158,46 @@ namespace DealerOn.SalesTaxes.Data
                 Price = 47.50M,
                 IsImported = true,
                 Type = ProductType.Other
+            });
+
+            AddProduct(new Product()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Bottle of DealerOn Perfume V2",
+                Description = "NEW AND IMPROVED! A perfume with the scent of new car smell.",
+                Price = 27.99M,
+                IsImported = true,
+                Type = ProductType.Other
+            });
+
+            AddProduct(new Product()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Bottle of DealerOn Perfume V3",
+                Description = "NEW AND IMPROVED AGAIN! A generic perfume with the scent of new car smell.",
+                Price = 18.99M,
+                IsImported = false,
+                Type = ProductType.Other
+            });
+
+            AddProduct(new Product()
+            {
+                Id = Guid.NewGuid(),
+                Name = "DealerOn's Packet of headache pills",
+                Description = "Pain reliever and fever reducer.",
+                Price = 9.75M,
+                IsImported = false,
+                Type = ProductType.Medical
+            });
+
+            AddProduct(new Product()
+            {
+                Id = Guid.NewGuid(),
+                Name = "DealerOn Box of Chocolates V2",
+                Description = "NEW AND IMPROVED! Gourmet chocolates that feature creamy, smooth milk chocolate for a classic, sweet indulgence.",
+                Price = 11.25M,
+                IsImported = true,
+                Type = ProductType.Food
             });
         }
     }
