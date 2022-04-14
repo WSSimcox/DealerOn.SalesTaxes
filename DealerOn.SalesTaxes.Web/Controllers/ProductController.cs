@@ -104,7 +104,7 @@ namespace DealerOn.SalesTaxes.Web.Controllers
             try
             {
                 _productServices.UpdateProduct(product);
-                return Ok();
+                return Ok(_productServices.GetProductById(product.Id));
             }
             catch (NotFoundException nex)
             {

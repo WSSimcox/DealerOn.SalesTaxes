@@ -2,6 +2,7 @@
 using DealerOn.SalesTaxes.Models.Exceptions;
 using DealerOn.SalesTaxes.Models.Transactions;
 using DealerOn.SalesTaxes.Services;
+using DealerOn.SalesTaxes.Web.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DealerOn.SalesTaxes.Web.Controllers
@@ -26,13 +27,20 @@ namespace DealerOn.SalesTaxes.Web.Controllers
         /// </summary>
         /// <returns> IActionResult status </returns>
         [HttpPost]
-        public IActionResult CreateTransactionReciept(SalesTransaction salesTransaction)
+        public IActionResult CreateTransactionReciept(IList<LineItemViewModel> lineItemViewModels)
         {
-            var result = _transactionServices.GenerateReceipt(salesTransaction);
+            try
+            {
+                var result = _transactionServices.GenerateReceipt(lineItemViewModels.Select(p => (ILineItem)p).ToList());
 
-            if (result == null)
+                if (result == null)
+                    return NotFound();
+                return Ok(result);
+            }
+            catch (NotFoundException)
+            {
                 return NotFound();
-            return Ok(result);
+            }
         }
     };
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 // Types
-import LineItem from '../LineItem/LineItem';
+import CartProduct from '../CartProduct/CartProduct';
 import { Wrapper } from './Cart.styles';
 import { Product } from '../App';
 // Material
@@ -28,18 +28,20 @@ const Cart: React.FC<Props> = ({ products, addToCart, removeFromCart }) => {
     <Wrapper>
       <div className={receiptVisible ? 'hidden' : 'undefined'}>
         <h2>Your Shopping Cart</h2>
-        {products.length === 0 ? <p>No items in cart.</p> : null}
+        {products.length === 0 ? <p>No items in cart.</p> : undefined }
         {products.map(product => (
-          <LineItem
+          <CartProduct
             key={product.id}
             product={product}
             addToCart={addToCart}
             removeFromCart={removeFromCart}
           />
         ))}
-        <h2>Total: ${calculateTotal(products).toFixed(2)}</h2>
-        <p>Tax calculated at checkout.</p>
-        <Button variant="contained" onClick={generateReceipt}>Checkout</Button>
+        <div className={products.length === 0 ? 'hidden' : undefined}>
+          <h2>Total: ${calculateTotal(products).toFixed(2)}</h2>
+          <p>Tax calculated at checkout.</p>
+          <Button variant="contained" onClick={generateReceipt}>Checkout</Button>
+        </div>
       </div>
       <div className={receiptVisible ? 'undefined' : 'hidden'}>
         <TransactionReceipt />  
