@@ -39,11 +39,10 @@ namespace DealerOn.SalesTaxes.Services
             var totalTax = (product.Price * taxRate) * quanitity;
 
             // return total amount rounded to nearest 5 cents
-            calcVal.CostPerItem = Math.Ceiling((product.Price + totalTax) / quanitity * 20M) / 20M;
-            calcVal.TotalTax = Math.Ceiling(totalTax * 20M) / 20M;
-            calcVal.TotalCost = calcVal.CostPerItem * quanitity;
+            calcVal.CostPerItemTaxed = product.Price + Math.Ceiling((product.Price * taxRate) * 20M) / 20M;
+            calcVal.TotalCost = calcVal.CostPerItemTaxed * quanitity;
+            calcVal.TotalTax = (calcVal.CostPerItemTaxed - product.Price) * quanitity;
             calcVal.Name = Name;
-
 
             return calcVal;
         }

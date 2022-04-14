@@ -5,8 +5,13 @@ namespace DealerOn.SalesTaxes.Models
     /// <summary>
     /// Class that represents LineItem inside reciept
     /// </summary>
-    public class LineItem
+    public class LineItem : ILineItem
     {
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public LineItem() { }
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -14,10 +19,16 @@ namespace DealerOn.SalesTaxes.Models
         /// <param name="quanitity"></param>
         public LineItem(Product product, int quanitity = 1)
         {
+            this.ProductId = product.Id;
             this.Product = product;
             this.Quantity = quanitity;
         }
-        
+
+        /// <summary>
+        /// Unique Identifier of the Product
+        /// </summary>
+        public Guid ProductId { get; set; }
+
         /// <summary>
         /// LineItem's product
         /// </summary>
@@ -27,6 +38,11 @@ namespace DealerOn.SalesTaxes.Models
         /// Quanitity of Products inside LineItem
         /// </summary>
         public int Quantity { get; set; }
+
+        /// <summary>
+        /// Total post tax cost for individual lineItem's product
+        /// </summary>
+        public decimal TotalCostPerItem { get; set; }
 
         /// <summary>
         /// List of CalulatedValues for tax purposes

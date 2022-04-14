@@ -119,26 +119,38 @@ namespace DealerOn.SalesTaxes.Services
         /// This function is responsible for generating a Receipt object
         /// </summary>
         /// <returns> Receiept </returns>
-        public Receipt GenerateReceipt(SalesTransaction? salesTransaction = null)
+        public Receipt GenerateReceipt(IList<ILineItem>? lineItems = null)
         {
             var receipt = CreateTransactionReceipt();
 
-            if (salesTransaction != null)
-                _salesTransaction = salesTransaction;
+            if (lineItems != null)
+            {
+                // Creating new SalesTransaction and adding provided lineItems
+                _salesTransaction = SalesTransaction.CreateSalesTransaction();
+                _salesTransaction.LineItems = lineItems.Select(p => new LineItem()
+                    {ProductId = p.ProductId, Quantity = p.Quantity }).ToList();
+            }
 
+            // return empty Receipt
             if (_salesTransaction.LineItems == null)
                 return receipt;
+
+            // Initializing Reciept's TotalTax
+            receipt.TotalTax = 0;
 
             // Iterating through each LineItem in the transaction
             foreach (var item in _salesTransaction.LineItems)
             {
                 // Saftey to check if provided product is correct product in cache
-                item.Product = _productRepository.GetProductById(item.Product.Id);
+                item.Product = _productRepository.GetProductById(item.ProductId);
 
                 var calcVals = new List<CalculatedValue>();
 
-                // Making price the starting TotalCost
-                receipt.TotalCost += item.Product.Price;
+                // Setting TotalCost to Product's price
+                receipt.TotalCost += item.Product.Price * item.Quantity;
+
+                // Making TotalCostPerItem the Products price
+                item.TotalCostPerItem = item.Product.Price;
 
                 // Calculating both sales and import tax
                 foreach (var calculator in _calculators)
@@ -147,6 +159,8 @@ namespace DealerOn.SalesTaxes.Services
                     // Adding the tax
                     receipt.TotalTax += calcVal.TotalTax;
                     receipt.TotalCost += calcVal.TotalTax;
+                    // Updating TotalCostPerItem which includes tax
+                    item.TotalCostPerItem += (calcVal.TotalTax / item.Quantity);
                     // Adding current calcVals to our list
                     calcVals.Add(calcVal);
                 }

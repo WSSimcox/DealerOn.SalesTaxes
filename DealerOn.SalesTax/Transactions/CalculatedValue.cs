@@ -5,7 +5,7 @@
         /// <summary>
         /// Cost of individual
         /// </summary>
-        public decimal CostPerItem { get; set; }
+        public decimal CostPerItemTaxed { get; set; }
 
         /// <summary>
         /// Total tax of an item

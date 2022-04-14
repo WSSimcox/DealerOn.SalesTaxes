@@ -31,7 +31,7 @@ namespace DealerOn.SalesTaxes.Services
         /// This function is responsible for generating a receipt
         /// </summary>
         /// <returns> The receipt that was generated </returns>
-        Receipt GenerateReceipt(SalesTransaction? salesTransaction = null);
+        Receipt GenerateReceipt(IList<ILineItem>? lineItems = null);
 
         /// <summary>
         /// This function is responsbile for returning the sum of all
