@@ -19,7 +19,6 @@ namespace DealerOn.SalesTaxes.Models
         /// <param name="quanitity"></param>
         public LineItem(Product product, int quanitity = 1)
         {
-            this.ProductId = product.Id;
             this.Product = product;
             this.Quantity = quanitity;
         }
