@@ -26,7 +26,8 @@ export type Receipt = {
 }
 
 export type LineItem = {
-  product: Product;
+  productId: string;
+  productName: string;
   quantity: number;
 }
 

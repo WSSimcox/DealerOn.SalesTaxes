@@ -1,6 +1,6 @@
 import * as React from 'react';
 // Types
-import { Product } from '../App';
+import { Product, ProductType } from '../App';
 // Material
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -12,7 +12,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import DialogTitle from '@mui/material/DialogTitle';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import AddBox from '@mui/icons-material/AddBox';
@@ -21,7 +21,7 @@ import { StyledAddButton } from './../App.styles';
 
 export default function FormDialog() {
     const [open, setOpen] = React.useState(false);
-    const [product, setProduct] = React.useState({ name: "Hello" } as Product);
+    const [product, setProduct] = React.useState({ } as Product);
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -35,8 +35,11 @@ export default function FormDialog() {
         product.description = e.currentTarget.value;
     };
 
+    const selectChangeHandle = (e: SelectChangeEvent<boolean>, child: React.ReactNode) => {
+        
+    };
+
     const handleAdd = () => {
-        product.price = 12.99;
         // Fire off the request to the service
         fetch('https://localhost:44301/api/v1/product', {
             method: "POST",
@@ -72,7 +75,7 @@ export default function FormDialog() {
                         onChange={handleChange}
                     />
                     </FormControl>
-                    <FormControl sx={{ mt: 2, minWidth: 120 } } fullWidth >
+                    <FormControl sx={{ mt: 2, minWidth: 120 }} fullWidth >
                     <TextField
                         autoFocus
                         id="productDescription"
@@ -82,13 +85,15 @@ export default function FormDialog() {
                         onChange={handleChange}
                     />
                     </FormControl>
-                    <FormControl sx={{ mt:2, mr:1,width: '30%' }} >
+                    <FormControl sx={{ mt:2, mr:1, width: '30%' }} >
                     <InputLabel id="lblProductType">Type</InputLabel>
                     <Select
                         id="productType"
                         labelId="lblProductType"
                         label="Type"
                         required
+                        // value={product.type}
+                        // onChange={selectChangeHandle}
                     >
                         <MenuItem value={1}>Other</MenuItem>
                         <MenuItem value={2}>Book</MenuItem>
@@ -97,12 +102,14 @@ export default function FormDialog() {
                     </Select>
                     </FormControl>
                     <FormControl sx={{ mt:2, mr:1, width: '30%' }} >
-                    <InputLabel id="lblProductType" defaultValue={0}>Status</InputLabel>
+                    <InputLabel id="lblProductIsImported" defaultValue={0}>Status</InputLabel>
                     <Select
                         id="productIsImported"
                         labelId="lblProductIsImported"
                         label="Status"
                         required
+                        value={product.isImported}
+                        onChange={selectChangeHandle}
                     >
                         <MenuItem value={0}>Local</MenuItem>
                         <MenuItem value={1}>Imported</MenuItem>

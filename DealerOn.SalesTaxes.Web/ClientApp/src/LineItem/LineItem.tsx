@@ -1,36 +1,14 @@
 import Button from '@material-ui/core/Button';
 // Types
-import { Product, ProductType } from '../App';
+import { Product } from '../App';
 // Styles
 import { Wrapper } from './LineItem.styles';
 
 type Props = {
   product: Product;
-  addToCart: (clickedItem: Product) => void;
-  removeFromCart: (id: string) => void;
 };
 
-function renderSwitch(param: Product) {
-  switch (param.type) {
-    case ProductType.Other: {
-      return <img src="images/Other.png" alt={param.name} />
-    }
-    case ProductType.Book: {
-      return <img src="images/Book.png" alt={param.name} />
-    }
-    case ProductType.Food: {
-      return <img src="images/Food.png" alt={param.name} />
-    }
-    case ProductType.Medical: {
-      return <img src="images/Medical.png" alt={param.name} />
-    }
-    default: {
-      return <img src="images/Other.png" alt={param.name} />
-    }
-  }
-}
-
-const LineItem: React.FC<Props> = ({ product, addToCart, removeFromCart }) => (
+const LineItem: React.FC<Props> = ({ product }) => (
   <Wrapper>
     <div>
       <h3>{product.name}</h3>
@@ -43,7 +21,6 @@ const LineItem: React.FC<Props> = ({ product, addToCart, removeFromCart }) => (
           size='small'
           disableElevation
           variant='contained'
-          onClick={() => removeFromCart(product.id)}
         >
           -
         </Button>
@@ -52,13 +29,11 @@ const LineItem: React.FC<Props> = ({ product, addToCart, removeFromCart }) => (
           size='small'
           disableElevation
           variant='contained'
-          onClick={() => addToCart(product)}
         >
           +
         </Button>
       </div>
     </div>
-    {renderSwitch(product)}
   </Wrapper>
 );
 

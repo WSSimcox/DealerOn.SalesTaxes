@@ -2,7 +2,7 @@ import React from 'react';
 // Types
 import CartProduct from '../CartProduct/CartProduct';
 import { Wrapper } from './Cart.styles';
-import { Product } from '../App';
+import { Product, LineItem } from '../App';
 // Material
 import Button from '@mui/material/Button';
 import TransactionReceipt from './TransactionReceipt/TransactionReceipt';
@@ -17,10 +17,24 @@ const Cart: React.FC<Props> = ({ products, addToCart, removeFromCart }) => {
 
   const[receiptVisible, setReceiptVisible] = React.useState(false); 
 
-  function generateReceipt() {
+  function handleCheckout() {
     setReceiptVisible(true);
-  }
+  };
   
+  function generateLineItems() { 
+    let lineItems = Array<LineItem>();
+
+    products.forEach((p) => {
+      let lineItem = {} as LineItem;
+      lineItem.productId = p.id;
+      lineItem.productName = p.name;
+      lineItem.quantity = p.amount;
+      lineItems.push(lineItem);
+    });
+
+    return lineItems;
+  };
+
   const calculateTotal = (items: Product[]) =>
     items.reduce((ack: number, item) => ack + item.amount * item.price, 0);
 
@@ -40,11 +54,11 @@ const Cart: React.FC<Props> = ({ products, addToCart, removeFromCart }) => {
         <div className={products.length === 0 ? 'hidden' : undefined}>
           <h2>Total: ${calculateTotal(products).toFixed(2)}</h2>
           <p>Tax calculated at checkout.</p>
-          <Button variant="contained" onClick={generateReceipt}>Checkout</Button>
+          <Button variant="contained" onClick={handleCheckout}>Checkout</Button>
         </div>
       </div>
       <div className={receiptVisible ? 'undefined' : 'hidden'}>
-        <TransactionReceipt />  
+        <TransactionReceipt  lineItems={generateLineItems()} /> 
       </div>
       
     </Wrapper>

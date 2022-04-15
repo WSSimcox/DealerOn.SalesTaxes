@@ -1,29 +1,29 @@
 import React from 'react';
 // Types
-import LineItem from '../../CartProduct/CartProduct';
 import { Wrapper } from '../Cart.styles';
-import { SalesTransaction } from '../../App';
+import { LineItem } from '../../App';
 
 type Props = {
-  transaction: SalesTransaction;
+  lineItems: LineItem[];
 };
 
-const TransactionReceipt: React.FC = ({ }) => {
+const TransactionReceipt: React.FC<Props> = ( { lineItems }) => {
+
+  
 
   return (
     <Wrapper>
-        {/* <h2>Thank you for your purchase!</h2>
-        {products.length === 0 ? <p>No items in cart.</p> : null}
-        {products.map(product => (
-          <LineItem
-            key={product.id}
-            product={product}
-            addToCart={addToCart}
-            removeFromCart={removeFromCart}
-          />
+        <h2>Thank you for your purchase!</h2>
+        {lineItems.map(lineItem => (
+          <div>
+            <h4>{lineItem.productId}</h4>
+            <h4>{lineItem.productName}</h4>
+            <h4>{lineItem.quantity}</h4>
+            <br/>
+          </div>
         ))}
         <h2>Tax: ${100}</h2>
-        <h2>Total: ${1000}</h2> */}
+        <h2>Total: ${1000}</h2>
     </Wrapper>
   );
 };
