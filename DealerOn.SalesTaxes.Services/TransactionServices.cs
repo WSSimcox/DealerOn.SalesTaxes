@@ -119,21 +119,22 @@ namespace DealerOn.SalesTaxes.Services
         /// This function is responsible for generating a Receipt object
         /// </summary>
         /// <returns> Receiept </returns>
-        public Receipt GenerateReceipt(IList<ILineItem>? lineItems = null)
+        public SalesTransaction GenerateTransaction(IList<ILineItem>? lineItems = null)
         {
+            SalesTransaction transaction = SalesTransaction.CreateSalesTransaction();
             var receipt = CreateTransactionReceipt();
 
             if (lineItems != null)
             {
-                // Creating new SalesTransaction and adding provided lineItems
-                _salesTransaction = SalesTransaction.CreateSalesTransaction();
+                // Adding provided lineItems to transaction
+                 transaction = SalesTransaction.CreateSalesTransaction();
                 _salesTransaction.LineItems = lineItems.Select(p => new LineItem()
                     {ProductId = p.ProductId, Quantity = p.Quantity }).ToList();
             }
 
-            // return empty Receipt
+            // return transaction with empty receipt
             if (_salesTransaction.LineItems == null)
-                return receipt;
+                return transaction;
 
             // Initializing Reciept's TotalTax
             receipt.TotalTax = 0;
@@ -169,7 +170,9 @@ namespace DealerOn.SalesTaxes.Services
                 receipt.LineItems?.Add(item);
             }
 
-            return receipt;
+            transaction.Receipt = receipt;
+
+            return transaction ;
         }
 
         /// <summary>

@@ -29,17 +29,17 @@ namespace DealerOn.SalesTaxes.Services.Tests
             var productRepo = new ProductInMemoryRepository();
 
             // Initializing TransactionServices
-            var transaction = new TransactionServices(productRepo, CalculatorFiller());
+            var transactionService = new TransactionServices(productRepo, CalculatorFiller());
 
             // Adding LineItems to transaction
-            transaction.AddLineItem(productRepo.GetProducts()[0]);
-            transaction.AddLineItem(productRepo.GetProducts()[1]);
-            transaction.AddLineItem(productRepo.GetProducts()[2]);
+            transactionService.AddLineItem(productRepo.GetProducts()[0]);
+            transactionService.AddLineItem(productRepo.GetProducts()[1]);
+            transactionService.AddLineItem(productRepo.GetProducts()[2]);
 
             // Updating receipt
-            var receipt = transaction.GenerateReceipt();
+            var transaction = transactionService.GenerateTransaction();
 
-            Assert.IsTrue(receipt.LineItems?.Count == 3);
+            Assert.IsTrue(transaction.Receipt.LineItems?.Count == 3);
         }
 
         /// <summary>
@@ -52,33 +52,33 @@ namespace DealerOn.SalesTaxes.Services.Tests
             var productRepo = new ProductInMemoryRepository();
 
             // Initializing TransactionServices
-            var transaction = new TransactionServices(productRepo, CalculatorFiller());
+            var transactionService = new TransactionServices(productRepo, CalculatorFiller());
 
             // Adding LineItems to transaction
-            transaction.AddLineItem(productRepo.GetProducts()[0]);
-            transaction.AddLineItem(productRepo.GetProducts()[1]);
+            transactionService.AddLineItem(productRepo.GetProducts()[0]);
+            transactionService.AddLineItem(productRepo.GetProducts()[1]);
 
             // Checking if everything is added
-            Assert.IsTrue(transaction.GetAllProductCount() == 2);
+            Assert.IsTrue(transactionService.GetAllProductCount() == 2);
 
             // Removing LineItem
-            transaction.RemoveLineItem(productRepo.GetProducts()[1].Id);
+            transactionService.RemoveLineItem(productRepo.GetProducts()[1].Id);
 
             // Checking if LineItem was removed
-            Assert.IsTrue(transaction.GetAllProductCount() == 1);
+            Assert.IsTrue(transactionService.GetAllProductCount() == 1);
         }
 
         /// <summary>
         /// Test method for GenerateReceipt
         /// </summary>
         [TestMethod]
-        public void GenerateReceiptTest()
+        public void GenerateTransactionTest()
         {
             // Initializing ProductInMemoryRepository
             var productRepo = new ProductInMemoryRepository();
 
             // Initializing TransactionServices
-            var transaction = new TransactionServices(productRepo, CalculatorFiller());
+            var transactionService = new TransactionServices(productRepo, CalculatorFiller());
 
             productRepo.DefaultProductFiller();
 
@@ -97,10 +97,10 @@ namespace DealerOn.SalesTaxes.Services.Tests
             list.Add(lineItemTwo);
 
             // Making new receipt
-            var receipt = transaction.GenerateReceipt(list);
+            var transaction = transactionService.GenerateTransaction(list);
 
-            Assert.IsTrue(receipt.TotalCost == 65.15M);
-            Assert.IsTrue(receipt.TotalTax == 7.65M);
+            Assert.IsTrue(transaction.Receipt.TotalCost == 65.15M);
+            Assert.IsTrue(transaction.Receipt.TotalTax == 7.65M);
         }
 
         /// <summary>

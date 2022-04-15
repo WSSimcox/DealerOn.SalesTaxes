@@ -157,7 +157,6 @@ namespace DealerOn.SalesTaxes.Data.Tests
             Assert.IsNotNull(returnedProduct);
             Assert.IsTrue(returnedProduct.Id == product.Id);
             Assert.IsTrue(returnedProduct.Type == product.Type);
-            Assert.IsNull(returnedProduct.Description);
             Assert.IsTrue(returnedProduct.Price == product.Price);
             Assert.IsTrue(returnedProduct.IsImported == product.IsImported); 
         }

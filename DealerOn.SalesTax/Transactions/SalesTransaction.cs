@@ -18,6 +18,11 @@
         public IList<LineItem>? LineItems { get; set; }
 
         /// <summary>
+        /// Receipt that belongs to a transaction
+        /// </summary>
+        public Receipt? Receipt { get; set; }
+
+        /// <summary>
         /// Create a new instance of an initialized SalesTransaction object
         /// </summary>
         /// <returns> SalesTransaction object </returns>
@@ -27,6 +32,7 @@
             transaction.Id = Guid.NewGuid();
             transaction.TransactionDate = DateTime.UtcNow;
             transaction.LineItems = new List<LineItem>();
+            transaction.Receipt = new Receipt();
 
             return transaction;
         }

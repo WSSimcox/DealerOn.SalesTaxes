@@ -27,15 +27,15 @@ namespace DealerOn.SalesTaxes.Web.Controllers
         /// </summary>
         /// <returns> IActionResult status </returns>
         [HttpPost]
-        public IActionResult CreateTransactionReciept(IList<LineItemViewModel> lineItemViewModels)
+        public IActionResult CreateTransaction(IList<LineItemViewModel> lineItemViewModels)
         {
             try
             {
-                var result = _transactionServices.GenerateReceipt(lineItemViewModels.Select(p => (ILineItem)p).ToList());
+                var transaction = _transactionServices.GenerateTransaction(lineItemViewModels.Select(p => (ILineItem)p).ToList());
 
-                if (result == null)
+                if (transaction == null)
                     return NotFound();
-                return Ok(result);
+                return Ok(transaction);
             }
             catch (NotFoundException)
             {
