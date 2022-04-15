@@ -12,22 +12,28 @@ import Badge from '@mui/material/Badge';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 // Styles
-import { Wrapper, StyledCartButton, StyledAddButton } from './App.styles';
+import { Wrapper, StyledCartButton } from './App.styles';
 // Types
+import { productEndpoint } from './ApiClient';
+
 export type SalesTransaction = {
   id: string;
   transactionDate: Date;
   lineItems: LineItem[];
+  receipt: Receipt;
 }
 
 export type Receipt = {
+  lineItems: LineItem[];
   totalTax: number;
   totalCost: number;
 }
 
 export type LineItem = {
+  product: Product;
   productId: string;
   productName: string;
+  totalCostPerItem: number;
   quantity: number;
 }
 
@@ -49,7 +55,7 @@ export enum ProductType {
 };
 
 const getProducts = async (): Promise<Product[]> =>
-  await (await fetch('https://localhost:44301/api/v1/product')).json();
+  await (await fetch(productEndpoint)).json();
 
 const App = () => {
   const [cartOpen, setCartOpen] = useState(false);
@@ -78,7 +84,7 @@ const App = () => {
   };
 
   const handleDeleteProduct = (clickedItem: Product) => {
-    fetch('https://localhost:44301/api/v1/product/' + clickedItem.id, { method: 'DELETE'});
+    fetch(productEndpoint + clickedItem.id, { method: 'DELETE'});
     //Todo: find how to use state
     window.location.reload();
     return (null);

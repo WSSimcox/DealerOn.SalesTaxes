@@ -1,6 +1,7 @@
 import * as React from 'react';
 // Types
-import { Product, ProductType } from '../App';
+import { Product } from '../App';
+import { productEndpoint } from '../ApiClient';
 // Material
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -41,7 +42,7 @@ export default function FormDialog() {
 
     const handleAdd = () => {
         // Fire off the request to the service
-        fetch('https://localhost:44301/api/v1/product', {
+        fetch(productEndpoint, {
             method: "POST",
             headers: new Headers({
                 "Content-Type": "application/json",
@@ -51,6 +52,7 @@ export default function FormDialog() {
         });
         // Close the dialog
         setOpen(false);
+        window.location.reload();
     };
     
     return (
@@ -131,6 +133,5 @@ export default function FormDialog() {
                 </DialogActions>
             </Dialog>
         </div>
-        // </Box>
     );
 }

@@ -1,9 +1,10 @@
-import Button from '@material-ui/core/Button';
-import DeleteForever from '@material-ui/icons/DeleteForever';
 // Types
 import { Product, ProductType } from '../App';
 // Styles
 import { Wrapper, StyledDeleteButton } from './Product.styles';
+// Material
+import Button from '@material-ui/core/Button';
+import DeleteForever from '@material-ui/icons/DeleteForever';
 
 type Props = {
   product: Product;

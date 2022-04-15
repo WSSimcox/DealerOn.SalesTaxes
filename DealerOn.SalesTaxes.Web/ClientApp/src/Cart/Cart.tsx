@@ -5,7 +5,7 @@ import { Wrapper } from './Cart.styles';
 import { Product, LineItem } from '../App';
 // Material
 import Button from '@mui/material/Button';
-import TransactionReceipt from './TransactionReceipt/TransactionReceipt';
+import TransactionDisplay from './TransactionDisplay/TransactionDisplay';
 
 type Props = {
   products: Product[];
@@ -58,7 +58,7 @@ const Cart: React.FC<Props> = ({ products, addToCart, removeFromCart }) => {
         </div>
       </div>
       <div className={receiptVisible ? 'undefined' : 'hidden'}>
-        <TransactionReceipt  lineItems={generateLineItems()} /> 
+        <TransactionDisplay  lineItems={generateLineItems()} /> 
       </div>
       
     </Wrapper>

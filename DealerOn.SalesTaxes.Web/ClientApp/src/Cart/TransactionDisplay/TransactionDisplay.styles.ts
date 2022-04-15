@@ -4,7 +4,6 @@ export const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   font-family: Arial, Helvetica, sans-serif;
-  border-bottom: 1px solid lightblue;
   padding-bottom: 20px;
 
   div {
@@ -17,11 +16,21 @@ export const Wrapper = styled.div`
     justify-content: space-between;
   }
 
-  img {
-    max-width: 80px;
-    padding-top: 80px;
-    object-fit: contain;
-    margin-left: 40px;
+  hr {
+    border-bottom: 1px solid lightblue;
+  }
+
+  p {
+    font-family: Helvetica
+  }
+
+  .left {
+    float: left;
+    text-align: left;
+  } 
+
+  .right {
+      float: right;
+      text-align: right;
   }
 `;
-

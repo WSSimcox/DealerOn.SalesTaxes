@@ -35,7 +35,7 @@ const LineItem: React.FC<Props> = ({ product, addToCart, removeFromCart }) => (
     <div>
       <h3>{product.name}</h3>
       <div className='information'>
-        <p>Price: ${product.price}</p>
+        <p>Price: ${product.price.toFixed(2)}</p>
         <p>Total: ${(product.amount * product.price).toFixed(2)}</p>
       </div>
       <div className='buttons'>
