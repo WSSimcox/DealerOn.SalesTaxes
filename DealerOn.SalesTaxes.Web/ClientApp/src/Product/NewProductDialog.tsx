@@ -1,7 +1,7 @@
 import * as React from 'react';
 // Types
 import { Product } from '../App';
-import { productEndpoint } from '../ApiClient';
+import { api, productEndpoint } from '../ApiClient';
 // Material
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -44,16 +44,7 @@ export default function FormDialog() {
     };
 
     const handleAdd = () => {
-        // Fire off the request to the service
-        fetch(productEndpoint, {
-            method: "POST",
-            headers: new Headers({
-                "Content-Type": "application/json",
-                Accept: "application/json"
-            }),
-            body: JSON.stringify(product)
-        });
-        // Close the dialog
+        let data = api<void, Product>(productEndpoint, product);
         setOpen(false);
         window.location.reload();
     };

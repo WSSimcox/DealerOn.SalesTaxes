@@ -2,28 +2,31 @@ import React from 'react';
 // Types
 import CartProduct from '../CartProduct/CartProduct';
 import { Wrapper } from './Cart.styles';
-import { Product, LineItem } from '../App';
+import { Product, LineItem, SalesTransaction, Receipt } from '../App';
 // Material
 import Button from '@mui/material/Button';
 import TransactionDisplay from './TransactionDisplay/TransactionDisplay';
-import { render } from 'react-dom';
+import { api, transactionEndpoint } from '../ApiClient';
 
 type Props = {
   products: Product[];
   addToCart: (clickedItem: Product) => void;
-  removeFromCart: (id: string) => void;
-  checkoutClicked: () => void;
+  removeFromCart: (id: string, allItems: boolean) => void;
 };
 
-const Cart: React.FC<Props> = ({ products, addToCart, removeFromCart, checkoutClicked }) => {
+const Cart: React.FC<Props> = ({ products, addToCart, removeFromCart }) => {
 
   const[receiptVisible, setReceiptVisible] = React.useState(false); 
-  const[transactionItems, setTransactionItems] = React.useState([] as LineItem[]); 
+  const[transactionData, setTransactionData] = React.useState({ lineItems: Array<LineItem>(), receipt: {} as Receipt} as SalesTransaction);
 
   function handleCheckout() {
-    setReceiptVisible(true);
-    generateLineItems();
-    EmptyCart();
+    let data = api<SalesTransaction, LineItem[]>(transactionEndpoint, generateLineItems());
+    data.then(d => {
+      setTransactionData(d);  
+    })
+
+    setReceiptVisible(true);    
+    EmptyCart();    
   };
   
   function generateLineItems() { 
@@ -35,17 +38,14 @@ const Cart: React.FC<Props> = ({ products, addToCart, removeFromCart, checkoutCl
       lineItem.productName = p.name;
       lineItem.quantity = p.amount;
       lineItems.push(lineItem);
-      transactionItems.push(lineItem);
     });
 
-    setTransactionItems(transactionItems);
-
-    return transactionItems;
+    return lineItems;
   };
 
   function EmptyCart() {
     products.forEach((p) => {
-      removeFromCart(p.id);
+      removeFromCart(p.id,true);
     });
   }
 
@@ -68,8 +68,11 @@ const Cart: React.FC<Props> = ({ products, addToCart, removeFromCart, checkoutCl
         <div className={products.length === 0 ? 'hidden' : undefined}>
           <h2>Total: ${calculateTotal(products).toFixed(2)}</h2>
           <p>Tax calculated at checkout.</p>
-          <Button variant="contained" onClick={() => checkoutClicked()}>Checkout</Button>
+          <Button variant="contained" onClick={() => handleCheckout()}>Checkout</Button>
         </div>
+      </div>
+      <div className={receiptVisible ? 'undefined' : 'hidden'}>
+        <TransactionDisplay  transaction={transactionData}/> 
       </div>
     </Wrapper>
   );

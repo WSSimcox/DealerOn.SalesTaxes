@@ -5,10 +5,10 @@ export const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+  height: 100%;
   width: 100%;
   border: 1px solid #122e5d;
   border-radius: 20px;
-  height: 100%;
 
   img {
     height: 256px;

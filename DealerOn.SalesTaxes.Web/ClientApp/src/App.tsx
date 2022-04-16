@@ -15,8 +15,6 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Wrapper, StyledCartButton } from './App.styles';
 // Types
 import { productEndpoint } from './ApiClient';
-import TransactionDisplay from './Cart/TransactionDisplay/TransactionDisplay';
-import React from 'react';
 
 export type SalesTransaction = {
   id: string;
@@ -92,11 +90,11 @@ const App = () => {
     return (null);
   };
 
-  const handleRemoveFromCart = (id: string) => {
+  const handleRemoveFromCart = (id: string, allItems: boolean = false) => {
     setCartProducts(prev =>
       prev.reduce((ack, item) => {
         if (item.id === id) {
-          if (item.amount === 1) return ack;
+          if (item.amount === 1 || allItems) return ack;
           return [...ack, { ...item, amount: item.amount - 1 }];
         } else {
           return [...ack, item];
@@ -104,40 +102,6 @@ const App = () => {
       }, [] as Product[])
     );
   };
-
-  const[receiptVisible, setReceiptVisible] = React.useState(false); 
-  const[transactionItems, setTransactionItems] = React.useState([] as LineItem[]); 
-
-  const handleCheckout = () => {
-    setCartOpen(false);
-    setReceiptVisible(true);
-    generateLineItems();
-    // EmptyCart();
-    setCartOpen(true);
-  };
-  
-  function generateLineItems() { 
-    let lineItems = Array<LineItem>();
-
-    cartProducts.forEach((p) => {
-      let lineItem = {} as LineItem;
-      lineItem.productId = p.id;
-      lineItem.productName = p.name;
-      lineItem.quantity = p.amount;
-      lineItems.push(lineItem);
-      transactionItems.push(lineItem);
-    });
-
-    setTransactionItems(transactionItems);
-
-    return transactionItems;
-  };
-
-  function EmptyCart() {
-    cartProducts.forEach((p) => {
-      handleRemoveFromCart(p.id);
-    });
-  }
 
   if (isLoading) return <LinearProgress />;
   if (error) return <div>Something went wrong ...</div>;
@@ -149,12 +113,8 @@ const App = () => {
         <Cart
           products={cartProducts}
           addToCart={handleAddToCart}
-          removeFromCart={handleRemoveFromCart}
-          checkoutClicked={handleCheckout}
+          removeFromCart={handleRemoveFromCart}          
         />
-        <div className={receiptVisible ? 'undefined' : 'hidden'}>
-          <TransactionDisplay  lineItems={transactionItems}/> 
-        </div>
       </Drawer>
       <NewProductDialog/>
       {/* Two options */}
@@ -163,9 +123,9 @@ const App = () => {
           <ShoppingCartIcon />
         </Badge>
       </StyledCartButton>
-      <Grid container spacing={3}>
+      <Grid container spacing={6}>
         {data?.map(item => (
-          <Grid item key={item.id} xs={12} sm={4}>
+          <Grid item key={item.id} xs={6} md={2}>
             <ProductCard product={item} handleAddToCart={handleAddToCart} handleDeleteProduct={handleDeleteProduct} />
           </Grid>
         ))}
