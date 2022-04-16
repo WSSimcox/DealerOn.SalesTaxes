@@ -15,6 +15,8 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Wrapper, StyledCartButton } from './App.styles';
 // Types
 import { productEndpoint } from './ApiClient';
+import TransactionDisplay from './Cart/TransactionDisplay/TransactionDisplay';
+import React from 'react';
 
 export type SalesTransaction = {
   id: string;
@@ -103,6 +105,40 @@ const App = () => {
     );
   };
 
+  const[receiptVisible, setReceiptVisible] = React.useState(false); 
+  const[transactionItems, setTransactionItems] = React.useState([] as LineItem[]); 
+
+  const handleCheckout = () => {
+    setCartOpen(false);
+    setReceiptVisible(true);
+    generateLineItems();
+    // EmptyCart();
+    setCartOpen(true);
+  };
+  
+  function generateLineItems() { 
+    let lineItems = Array<LineItem>();
+
+    cartProducts.forEach((p) => {
+      let lineItem = {} as LineItem;
+      lineItem.productId = p.id;
+      lineItem.productName = p.name;
+      lineItem.quantity = p.amount;
+      lineItems.push(lineItem);
+      transactionItems.push(lineItem);
+    });
+
+    setTransactionItems(transactionItems);
+
+    return transactionItems;
+  };
+
+  function EmptyCart() {
+    cartProducts.forEach((p) => {
+      handleRemoveFromCart(p.id);
+    });
+  }
+
   if (isLoading) return <LinearProgress />;
   if (error) return <div>Something went wrong ...</div>;
 
@@ -114,7 +150,11 @@ const App = () => {
           products={cartProducts}
           addToCart={handleAddToCart}
           removeFromCart={handleRemoveFromCart}
+          checkoutClicked={handleCheckout}
         />
+        <div className={receiptVisible ? 'undefined' : 'hidden'}>
+          <TransactionDisplay  lineItems={transactionItems}/> 
+        </div>
       </Drawer>
       <NewProductDialog/>
       {/* Two options */}

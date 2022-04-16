@@ -42,12 +42,11 @@ const TransactionReceipt: React.FC<Props> = ( { lineItems }) => {
   function LineItemFormatter(lineItem: LineItem) {
     if (lineItem.quantity > 1)
       return <p>
-                {lineItem.product.name}: {lineItem.product.price} 
-                ({lineItem.quantity} @ {lineItem.totalCostPerItem.toFixed(2)})
+                {lineItem.product.name}: {lineItem.product.price.toFixed(2)} 
+                &nbsp; ({lineItem.quantity} @ {lineItem.totalCostPerItem.toFixed(2)})
              </p>
     else
-      return <p>{lineItem.product.name}: {lineItem.product.price}</p>
-
+      return <p>{lineItem.product.name}: {lineItem.product.price.toFixed(2)}</p>
   }
 
   if (isLoading) return <LinearProgress />;
@@ -68,7 +67,6 @@ const TransactionReceipt: React.FC<Props> = ( { lineItems }) => {
           <h4>Total: ${data?.receipt.totalCost.toFixed(2)}</h4>
         </div>
     </Wrapper>
-    
   );
 };
 

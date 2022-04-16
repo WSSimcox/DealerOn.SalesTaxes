@@ -65,7 +65,7 @@ namespace DealerOn.SalesTaxes.Web.Controllers
                 return BadRequest();
 
             _productServices.AddProduct(product);
-            return Ok();
+            return Ok(product);
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace DealerOn.SalesTaxes.Web.Controllers
             try
             {
                 _productServices.RemoveProduct(id);
-                return Ok();
+                return Ok($"Product {id} deleted.");
             }
             catch (NotFoundException nex)
             {

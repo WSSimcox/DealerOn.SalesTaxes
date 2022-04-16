@@ -31,13 +31,16 @@ export default function FormDialog() {
         setOpen(false);
     };
 
-    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        product.name = e.currentTarget.value;
-        product.description = e.currentTarget.value;
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setProduct({...product, [e.target.name] : e.currentTarget.value})
     };
 
-    const selectChangeHandle = (e: SelectChangeEvent<boolean>, child: React.ReactNode) => {
-        
+    const selectHandleChange = (e: SelectChangeEvent<boolean>, child: React.ReactNode) => {
+        if (e.target.value === "true" || e.target.value === "false") {
+            setProduct({...product, [e.target.name] : e.target.value === 'true' ? true : false});
+        }
+        else
+            setProduct({...product, [e.target.name] : e.target.value});
     };
 
     const handleAdd = () => {
@@ -72,6 +75,7 @@ export default function FormDialog() {
                         autoFocus
                         id="productName"
                         label="Product Name"
+                        name="name"
                         required
                         value={product.name}
                         onChange={handleChange}
@@ -82,6 +86,7 @@ export default function FormDialog() {
                         autoFocus
                         id="productDescription"
                         label="Product Description"
+                        name="description"
                         fullWidth
                         value={product.description}
                         onChange={handleChange}
@@ -93,9 +98,9 @@ export default function FormDialog() {
                         id="productType"
                         labelId="lblProductType"
                         label="Type"
+                        name="type"
                         required
-                        // value={product.type}
-                        // onChange={selectChangeHandle}
+                        onChange={selectHandleChange}
                     >
                         <MenuItem value={1}>Other</MenuItem>
                         <MenuItem value={2}>Book</MenuItem>
@@ -109,12 +114,12 @@ export default function FormDialog() {
                         id="productIsImported"
                         labelId="lblProductIsImported"
                         label="Status"
+                        name="isImported"
                         required
-                        value={product.isImported}
-                        onChange={selectChangeHandle}
+                        onChange={selectHandleChange}
                     >
-                        <MenuItem value={0}>Local</MenuItem>
-                        <MenuItem value={1}>Imported</MenuItem>
+                        <MenuItem value={'false'}>Local</MenuItem>
+                        <MenuItem value={'true'}>Imported</MenuItem>
                     </Select>
                     </FormControl>
                     <FormControl sx={{ mt: 2, width: '37%' } }>
@@ -122,6 +127,8 @@ export default function FormDialog() {
                         <OutlinedInput
                             id="filled-adornment-amount"
                             label="Price"
+                            name="price"
+                            onChange={handleChange}
                             inputProps={{ inputMode: 'numeric', pattern: '([0-9])'}}
                             startAdornment={<InputAdornment position="start">$</InputAdornment>}
                         />
