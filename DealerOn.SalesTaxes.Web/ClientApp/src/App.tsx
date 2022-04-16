@@ -90,11 +90,11 @@ const App = () => {
     return (null);
   };
 
-  const handleRemoveFromCart = (id: string) => {
+  const handleRemoveFromCart = (id: string, allItems: boolean = false) => {
     setCartProducts(prev =>
       prev.reduce((ack, item) => {
         if (item.id === id) {
-          if (item.amount === 1) return ack;
+          if (item.amount === 1 || allItems) return ack;
           return [...ack, { ...item, amount: item.amount - 1 }];
         } else {
           return [...ack, item];
@@ -113,7 +113,7 @@ const App = () => {
         <Cart
           products={cartProducts}
           addToCart={handleAddToCart}
-          removeFromCart={handleRemoveFromCart}
+          removeFromCart={handleRemoveFromCart}          
         />
       </Drawer>
       <NewProductDialog/>
@@ -123,9 +123,9 @@ const App = () => {
           <ShoppingCartIcon />
         </Badge>
       </StyledCartButton>
-      <Grid container spacing={3}>
+      <Grid container spacing={6}>
         {data?.map(item => (
-          <Grid item key={item.id} xs={12} sm={4}>
+          <Grid item key={item.id} xs={6} md={2}>
             <ProductCard product={item} handleAddToCart={handleAddToCart} handleDeleteProduct={handleDeleteProduct} />
           </Grid>
         ))}

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-serif, courier-new;
   padding-bottom: 20px;
 
   div {
@@ -21,7 +21,7 @@ export const Wrapper = styled.div`
   }
 
   p {
-    font-family: Helvetica
+    font-family: courier-new;
   }
 
   .left {

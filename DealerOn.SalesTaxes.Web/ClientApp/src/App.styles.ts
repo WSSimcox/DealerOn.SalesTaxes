@@ -4,6 +4,10 @@ import IconButton from '@material-ui/core/IconButton';
 export const Wrapper = styled.div`
   padding-top: 50px;
   margin: 40px;
+
+  .hidden {
+    display: none;
+  }
 `;
 
 export const StyledCartButton = styled(IconButton)`

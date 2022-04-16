@@ -7,7 +7,7 @@ import { Wrapper } from './CartProduct.styles';
 type Props = {
   product: Product;
   addToCart: (clickedItem: Product) => void;
-  removeFromCart: (id: string) => void;
+  removeFromCart: (id: string, allItems: boolean) => void;
 };
 
 function renderSwitch(param: Product) {
@@ -43,7 +43,7 @@ const LineItem: React.FC<Props> = ({ product, addToCart, removeFromCart }) => (
           size='small'
           disableElevation
           variant='contained'
-          onClick={() => removeFromCart(product.id)}
+          onClick={() => removeFromCart(product.id,false)}
         >
           -
         </Button>
