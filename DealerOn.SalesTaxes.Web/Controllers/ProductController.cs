@@ -84,7 +84,7 @@ namespace DealerOn.SalesTaxes.Web.Controllers
             }
             catch (NotFoundException nex)
             {
-                return NotFound();
+                return NotFound(nex.Message);
             }
             catch (Exception ex)
             {
