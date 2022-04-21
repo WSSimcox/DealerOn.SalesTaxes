@@ -14,3 +14,7 @@ medical products, which are exempt from basic sales tax. An import duty (import 
 a rate of 5% of the shelf price, with no exceptions. 
 
 This project was created using Microsoft's .Net Core and Facebook's React (w/ TypeScript).
+
+# Important
+
+Please set DealerOn.SalesTaxes.Web as the starting project and run ISS Express.
