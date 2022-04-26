@@ -5,7 +5,7 @@ const Navbar = () => {
     return (
         <Wrapper>
             <a href='./App'>
-                <img src="images/DealerOn.png" alt="Logo"/>
+                <img src="images/Logo.png" alt="Logo"/>
             </a>
         </Wrapper>
     );

@@ -15,7 +15,7 @@ const TransactionReceipt: React.FC<Props> = ( { transaction }) => {
 
   function LineItemSeparator() {
     count++;
-    if (count != transaction?.receipt.lineItems.length) {
+    if (count !== transaction?.receipt.lineItems.length) {
       return <Divider variant="middle"/>
     }
   }
