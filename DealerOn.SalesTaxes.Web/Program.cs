@@ -1,6 +1,6 @@
-using DealerOn.SalesTaxes.Data;
-using DealerOn.SalesTaxes.Models;
-using DealerOn.SalesTaxes.Services;
+using SalesTaxes.Data;
+using SalesTaxes.Models;
+using SalesTaxes.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);

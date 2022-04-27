@@ -1,10 +1,10 @@
-﻿using DealerOn.SalesTaxes.Data;
-using DealerOn.SalesTaxes.Models;
-using DealerOn.SalesTaxes.Models.Exceptions;
-using DealerOn.SalesTaxes.Services;
+﻿using SalesTaxes.Data;
+using SalesTaxes.Models;
+using SalesTaxes.Models.Exceptions;
+using SalesTaxes.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DealerOn.SalesTaxes.Web.Controllers
+namespace SalesTaxes.Web.Controllers
 {
     [ApiController]
     [Route("api/v1/product")]

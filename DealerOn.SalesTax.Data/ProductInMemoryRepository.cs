@@ -1,12 +1,12 @@
-﻿using DealerOn.SalesTaxes.Models;
-using DealerOn.SalesTaxes.Models.Exceptions;
+﻿using SalesTaxes.Models;
+using SalesTaxes.Models.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DealerOn.SalesTaxes.Data
+namespace SalesTaxes.Data
 {
     public class ProductInMemoryRepository : IProductRepository
     {

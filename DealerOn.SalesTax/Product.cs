@@ -1,4 +1,4 @@
-﻿namespace DealerOn.SalesTaxes.Models
+﻿namespace SalesTaxes.Models
 {
     public class Product
     {

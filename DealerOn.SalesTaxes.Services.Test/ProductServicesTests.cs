@@ -1,5 +1,5 @@
-﻿using DealerOn.SalesTaxes.Data;
-using DealerOn.SalesTaxes.Models;
+﻿using SalesTaxes.Data;
+using SalesTaxes.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DealerOn.SalesTaxes.Services.Tests
+namespace SalesTaxes.Services.Tests
 {
     [TestClass]
     public class ProductServicesTests

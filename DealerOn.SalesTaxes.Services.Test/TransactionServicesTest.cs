@@ -1,12 +1,12 @@
-using DealerOn.SalesTaxes.Data;
-using DealerOn.SalesTaxes.Models;
-using DealerOn.SalesTaxes.Models.Transactions;
+using SalesTaxes.Data;
+using SalesTaxes.Models;
+using SalesTaxes.Models.Transactions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DealerOn.SalesTaxes.Services.Tests
+namespace SalesTaxes.Services.Tests
 {
     [TestClass]
     public class TransactionServicesTest

@@ -1,12 +1,12 @@
-﻿using DealerOn.SalesTaxes.Data;
-using DealerOn.SalesTaxes.Models;
+﻿using SalesTaxes.Data;
+using SalesTaxes.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DealerOn.SalesTaxes.Services
+namespace SalesTaxes.Services
 {
     public class ProductServices : IProductServices
     {

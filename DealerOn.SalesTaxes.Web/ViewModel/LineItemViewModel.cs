@@ -1,6 +1,6 @@
-﻿using DealerOn.SalesTaxes.Models;
+﻿using SalesTaxes.Models;
 
-namespace DealerOn.SalesTaxes.Web.ViewModel
+namespace SalesTaxes.Web.ViewModel
 {
     public class LineItemViewModel : ILineItem
     {

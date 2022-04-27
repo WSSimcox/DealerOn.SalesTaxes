@@ -1,12 +1,12 @@
-﻿using DealerOn.SalesTaxes.Models;
+﻿using SalesTaxes.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DealerOn.SalesTaxes.Models.Transactions;
+using SalesTaxes.Models.Transactions;
 
-namespace DealerOn.SalesTaxes.Services
+namespace SalesTaxes.Services
 {
     public interface ITaxCalculatorServices
     {

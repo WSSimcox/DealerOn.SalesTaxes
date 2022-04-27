@@ -1,9 +1,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DealerOn.SalesTaxes.Data;
-using DealerOn.SalesTaxes.Models;
+using SalesTaxes.Data;
+using SalesTaxes.Models;
 using System;
 
-namespace DealerOn.SalesTaxes.Data.Tests
+namespace SalesTaxes.Data.Tests
 {
     [TestClass]
     public class ProductRepositoryTests

@@ -1,11 +1,11 @@
-﻿using DealerOn.SalesTaxes.Models;
-using DealerOn.SalesTaxes.Models.Exceptions;
-using DealerOn.SalesTaxes.Models.Transactions;
-using DealerOn.SalesTaxes.Services;
-using DealerOn.SalesTaxes.Web.ViewModel;
+﻿using SalesTaxes.Models;
+using SalesTaxes.Models.Exceptions;
+using SalesTaxes.Models.Transactions;
+using SalesTaxes.Services;
+using SalesTaxes.Web.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DealerOn.SalesTaxes.Web.Controllers
+namespace SalesTaxes.Web.Controllers
 {
     [ApiController]
     [Route("api/v1/transaction")]

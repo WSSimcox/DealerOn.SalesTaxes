@@ -1,11 +1,11 @@
-﻿using DealerOn.SalesTaxes.Models;
+﻿using SalesTaxes.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DealerOn.SalesTaxes.Data
+namespace SalesTaxes.Data
 {
     public class ProductTaxRepository : IProductTaxRepository
     {

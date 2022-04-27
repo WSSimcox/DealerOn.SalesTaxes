@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -41,9 +41,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DealerOn.SalesTax.Data\DealerOn.SalesTaxes.Data.csproj" />
-    <ProjectReference Include="..\DealerOn.SalesTaxes.Services\DealerOn.SalesTaxes.Services.csproj" />
-    <ProjectReference Include="..\DealerOn.SalesTax\DealerOn.SalesTaxes.Models.csproj" />
+    <ProjectReference Include="..\DealerOn.SalesTax.Data\SalesTaxes.Data.csproj" />
+    <ProjectReference Include="..\DealerOn.SalesTaxes.Services\SalesTaxes.Services.csproj" />
+    <ProjectReference Include="..\DealerOn.SalesTax\SalesTaxes.Models.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

@@ -1,6 +1,6 @@
-﻿using DealerOn.SalesTaxes.Models;
+﻿using SalesTaxes.Models;
 
-namespace DealerOn.SalesTaxes.Data
+namespace SalesTaxes.Data
 {
     public interface IProductTaxRepository
     {

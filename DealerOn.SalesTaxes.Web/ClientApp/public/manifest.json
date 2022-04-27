@@ -1,6 +1,6 @@
 {
-  "short_name": "DealerOn.SalesTaxes.Web",
-  "name": "DealerOn.SalesTaxes.Web",
+  "short_name": "SalesTaxes.Web",
+  "name": "SalesTaxes.Web",
   "icons": [
     {
       "src": "favicon.ico",

@@ -1,4 +1,4 @@
-﻿namespace DealerOn.SalesTaxes.Models.Transactions
+﻿namespace SalesTaxes.Models.Transactions
 {
     public class CalculatedValue
     {

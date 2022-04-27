@@ -1,7 +1,7 @@
-﻿using DealerOn.SalesTaxes.Models;
-using DealerOn.SalesTaxes.Models.Transactions;
+﻿using SalesTaxes.Models;
+using SalesTaxes.Models.Transactions;
 
-namespace DealerOn.SalesTaxes.Services
+namespace SalesTaxes.Services
 {
     public class ImportTaxCalculatorServices : ITaxCalculatorServices
     {

@@ -1,6 +1,6 @@
-﻿using DealerOn.SalesTaxes.Models;
+﻿using SalesTaxes.Models;
 
-namespace DealerOn.SalesTaxes.Services
+namespace SalesTaxes.Services
 {
     public interface IProductServices
     {

@@ -1,9 +1,9 @@
-﻿using DealerOn.SalesTaxes.Data;
-using DealerOn.SalesTaxes.Models.Transactions;
-using DealerOn.SalesTaxes.Models;
-using DealerOn.SalesTaxes.Models.Exceptions;
+﻿using SalesTaxes.Data;
+using SalesTaxes.Models.Transactions;
+using SalesTaxes.Models;
+using SalesTaxes.Models.Exceptions;
 
-namespace DealerOn.SalesTaxes.Services
+namespace SalesTaxes.Services
 {
     public class TransactionServices : ITransactionServices
     {

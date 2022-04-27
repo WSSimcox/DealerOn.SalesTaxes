@@ -1,6 +1,6 @@
-﻿using DealerOn.SalesTaxes.Models.Transactions;
+﻿using SalesTaxes.Models.Transactions;
 
-namespace DealerOn.SalesTaxes.Models
+namespace SalesTaxes.Models
 {
     /// <summary>
     /// Class that represents LineItem inside reciept

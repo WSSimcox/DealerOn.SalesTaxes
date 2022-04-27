@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -15,8 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DealerOn.SalesTaxes.Services\DealerOn.SalesTaxes.Services.csproj" />
-    <ProjectReference Include="..\DealerOn.SalesTax\DealerOn.SalesTaxes.Models.csproj" />
+    <ProjectReference Include="..\DealerOn.SalesTax.Data\SalesTaxes.Data.csproj" />
+    <ProjectReference Include="..\DealerOn.SalesTax\SalesTaxes.Models.csproj" />
   </ItemGroup>
 
 </Project>
