@@ -12,6 +12,18 @@ namespace DealerOn.SalesTaxes.Services.Tests
     [TestClass]
     public class ProductServicesTests
     {
+        ProductInMemoryRepository? _productRepo;
+
+        /// <summary>
+        /// Initializing Test Class and filling Product Cache
+        /// </summary>
+        [TestInitialize]
+        public void Initialize()
+        {
+            _productRepo = new ProductInMemoryRepository();
+            _productRepo.DefaultProductFiller();
+        }
+
         /// <summary>
         /// Test method for AddProduct()
         /// </summary>
@@ -46,6 +58,9 @@ namespace DealerOn.SalesTaxes.Services.Tests
             Assert.IsTrue(returnedProduct.Description == product.Description);
             Assert.IsTrue(returnedProduct.Price == product.Price);
             Assert.IsTrue(returnedProduct.IsImported == product.IsImported);
+
+            // Removing product
+            service.RemoveProduct(product.Id);
         }
 
 
@@ -57,15 +72,12 @@ namespace DealerOn.SalesTaxes.Services.Tests
         {
             var service = new ProductServices(new ProductInMemoryRepository());
 
-            Product product = new Product()
-            {
-                Id = Guid.Parse("6297d114-6c99-4bdd-a0e5-2ab691b858a5"),
-                Name = "TestProduct",
-                Type = ProductType.Other,
-                Description = "Test Product for AddProductTest()",
-                Price = 10.50M,
-                IsImported = false
-            };
+
+            // Copying list over for confirmation
+            var returnedList = _productRepo.GetProducts();
+
+            // Getting product to remove
+            var product = returnedList[0];
 
             // Adding Product via service
             service.AddProduct(product);
@@ -77,7 +89,7 @@ namespace DealerOn.SalesTaxes.Services.Tests
             Assert.IsNotNull(returnedProduct);
 
             // Removing Product via service
-            service.RemoveProduct(product.Id);
+            service.RemoveProduct(returnedProduct.Id);
 
             // Updating returnedProduct
             returnedProduct = service.GetProductById(product.Id);
@@ -94,16 +106,11 @@ namespace DealerOn.SalesTaxes.Services.Tests
         {
             var service = new ProductServices(new ProductInMemoryRepository());
 
-            // Creating a test product
-            Product product = new Product()
-            {
-                Id = Guid.Parse("6297d114-6c99-4bdd-a0e5-2ab691b858a5"),
-                Name = "TestProduct",
-                Type = ProductType.Other,
-                Description = "Test Product for UpdateProductTest()",
-                Price = 10.50M,
-                IsImported = false
-            };
+            // Getting product to update
+            var product = _productRepo.GetProducts()[0];
+
+            // Creating copy to update product back
+            var productCopy = product;
 
             // Adding product that we created
             service.AddProduct(product);
@@ -125,6 +132,9 @@ namespace DealerOn.SalesTaxes.Services.Tests
             Assert.IsTrue(returnedProduct.Description == "Updated Test Product for UpdateProductTest()");
             Assert.IsTrue(returnedProduct.Price == 11.00M);
             Assert.IsTrue(returnedProduct.IsImported);
+
+            // Reverting back to original product
+            service.UpdateProduct(productCopy);
         }
 
         /// <summary>
@@ -150,6 +160,9 @@ namespace DealerOn.SalesTaxes.Services.Tests
 
             // Checking if product is found by service
             var returnedProduct = service.GetProductById(product.Id);
+
+            // Removing product
+            service.RemoveProduct(product.Id);
         }
 
         /// <summary>
@@ -193,6 +206,9 @@ namespace DealerOn.SalesTaxes.Services.Tests
             Assert.IsTrue(returnedProductList.Contains(productOne));
             Assert.IsTrue(returnedProductList.Contains(productTwo));
 
+            // Removing products
+            service.RemoveProduct(productOne.Id);
+            service.RemoveProduct(productTwo.Id);
         }
     }
 }

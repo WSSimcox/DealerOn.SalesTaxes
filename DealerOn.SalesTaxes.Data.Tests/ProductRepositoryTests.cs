@@ -8,6 +8,18 @@ namespace DealerOn.SalesTaxes.Data.Tests
     [TestClass]
     public class ProductRepositoryTests
     {
+        ProductInMemoryRepository? _productRepo;
+
+        /// <summary>
+        /// Initializing Test Class and filling Product Cache
+        /// </summary>
+        [TestInitialize]
+        public void Initialize()
+        {
+            _productRepo = new ProductInMemoryRepository();
+            _productRepo.DefaultProductFiller();
+        }
+
         /// <summary>
         /// Test method for AddProduct()
         /// Note: also tests GetProducts()
@@ -15,38 +27,21 @@ namespace DealerOn.SalesTaxes.Data.Tests
         [TestMethod]
         public void AddProductTest()
         {
-            var repo = new ProductInMemoryRepository();
-
-            // Creating two test products
-            Product productOne = new Product()
-            {
-                Id = Guid.Parse("6297d114-6c99-4bdd-a0e5-2ab691b858a5"),
-                Name = "TestProduct",
-                Type = ProductType.Other,
-                Description = "Test Product for AddProductTest()",
-                Price = 10.50M,
-                IsImported = false
-            };
-
-            Product productTwo = new Product()
-            {
-                Id = Guid.Parse("83fefeaa-8154-43bd-9ca8-30e5fabc1385"),
-                Name = "TestProductOne",
-                Type = ProductType.Other,
-                Price = 5.00M,
-                IsImported = true
-            };
+            // Getting product to update
+            var product = _productRepo.GetProducts()[0];
 
             // Adding products that we created
-            repo.AddProduct(productOne);
-            repo.AddProduct(productTwo);
+            _productRepo.AddProduct(product);
 
             // Copying list over for confirmation
-            var returnList = repo.GetProducts();
+            var returnList = _productRepo.GetProducts();
 
             // Checking if products were added
             Assert.IsNotNull(returnList);
-            Assert.IsTrue(returnList.Count == 2);
+            Assert.IsTrue(returnList.Contains(product));
+
+            // Removing product
+            _productRepo.RemoveProduct(product.Id);
         }
 
         /// <summary>
@@ -55,37 +50,27 @@ namespace DealerOn.SalesTaxes.Data.Tests
         [TestMethod]
         public void RemoveProductTest()
         {
-            var repo = new ProductInMemoryRepository();
-
-            // Creating a test product
-            Product product = new Product()
-            {
-                Id = Guid.Parse("6297d114-6c99-4bdd-a0e5-2ab691b858a5"),
-                Name = "TestProduct",
-                Type = ProductType.Other,
-                Description = "Test Product for RemoveProductTest()",
-                Price = 10.50M,
-                IsImported = false
-            };
-
-            // Adding product that we created
-            repo.AddProduct(product);
-
             // Copying list over for confirmation
-            var returnedList = repo.GetProducts();
+            var returnedList = _productRepo.GetProducts();
+
+            // Getting product to remove
+            var product = returnedList[0];
 
             // Checking if productOne was added
             Assert.IsNotNull(returnedList);
             Assert.IsTrue(returnedList.Contains(product));
 
             // Removing product
-            repo.RemoveProduct(product.Id);
+            _productRepo.RemoveProduct(product.Id);
 
             // Updating returnList
-            returnedList = repo.GetProducts();
+            returnedList = _productRepo.GetProducts();
 
             // Checking if productOne was removed 
             Assert.IsFalse(returnedList.Contains(product));
+
+            // Adding product back
+            _productRepo.AddProduct(product);
         }
 
         /// <summary>
@@ -94,39 +79,32 @@ namespace DealerOn.SalesTaxes.Data.Tests
         [TestMethod]
         public void UpdateProductTest()
         {
-            var repo = new ProductInMemoryRepository();
+            // Getting product to update
+            var product = _productRepo.GetProducts()[0];
 
-            // Creating a test product
-            Product product = new Product()
-            {
-                Id = Guid.Parse("6297d114-6c99-4bdd-a0e5-2ab691b858a5"),
-                Name = "TestProduct",
-                Type = ProductType.Other,
-                Description = "Test Product for UpdateProductTest()",
-                Price = 10.50M,
-                IsImported = false
-            };
-
-            // Adding product that we created
-            repo.AddProduct(product);
+            // Creating copy to update product back
+            var productCopy = product;
 
             product.Name = "UpdatedTestProduct";
             product.Type = ProductType.Food;
             product.Description = "Updated Test Product for UpdateProductTest()";
-            product.Price = 11.00M;
+            product.Price = 69.00M;
             product.IsImported = true;
 
             // Updating product
-            repo.UpdateProduct(product);
+            _productRepo.UpdateProduct(product);
 
-            var returnedProduct = repo.GetProductById(product.Id);
+            var returnedProduct = _productRepo.GetProductById(product.Id);
 
             Assert.IsNotNull(returnedProduct);
             Assert.IsTrue(returnedProduct.Name == "UpdatedTestProduct");
             Assert.IsTrue(returnedProduct.Type == ProductType.Food);
             Assert.IsTrue(returnedProduct.Description == "Updated Test Product for UpdateProductTest()");
-            Assert.IsTrue(returnedProduct.Price == 11.00M);
+            Assert.IsTrue(returnedProduct.Price == 69.00M);
             Assert.IsTrue(returnedProduct.IsImported);
+
+            // Reverting back to original product
+            _productRepo.UpdateProduct(productCopy);
         }
 
         /// <summary>
@@ -135,23 +113,14 @@ namespace DealerOn.SalesTaxes.Data.Tests
         [TestMethod]
         public void GetProductByIdTest()
         {
-            var repo = new ProductInMemoryRepository();
+            // Copying list over for confirmation
+            var returnedList = _productRepo.GetProducts();
 
-            // Creating a test product
-            Product product = new Product()
-            {
-                Id = Guid.Parse("6297d114-6c99-4bdd-a0e5-2ab691b858a5"),
-                Name = "TestProduct",
-                Type = ProductType.Other,
-                Price = 10.50M,
-                IsImported = false
-            };
-
-            // Adding product that we created
-            repo.AddProduct(product);
+            // Getting product to retrieve
+            var product = returnedList[0];
 
             // Trying to copy product from repo
-            var returnedProduct = repo.GetProductById(product.Id);
+            var returnedProduct = _productRepo.GetProductById(product.Id);
 
             // Checking if all variables in returnedProduct match productOne's variables
             Assert.IsNotNull(returnedProduct);
