@@ -109,11 +109,14 @@ namespace DealerOn.SalesTaxes.Data
         /// </summary>
         public void DefaultProductFiller()
         {
+            if (productCache.Count > 0)
+                return;
+
             // Default starter products
             AddProduct(new Product()
             {
                 Id = Guid.NewGuid(),
-                Name = "DealerOn Book",
+                Name = "Book",
                 Description = "An awesome book!",
                 Price = 12.49M,
                 IsImported = false,
@@ -123,7 +126,7 @@ namespace DealerOn.SalesTaxes.Data
             AddProduct(new Product()
             {
                 Id = Guid.NewGuid(),
-                Name = "DealerOn Music CD",
+                Name = "Music CD",
                 Description = "An awesome CD!",
                 Price = 14.99M,
                 IsImported = false,
@@ -133,7 +136,7 @@ namespace DealerOn.SalesTaxes.Data
             AddProduct(new Product()
             {
                 Id = Guid.NewGuid(),
-                Name = "DealerOn's Chocolate Bar",
+                Name = "Chocolate Bar",
                 Description = "An artisan chocolate bar.",
                 Price = 0.85M,
                 IsImported = false,
@@ -143,7 +146,7 @@ namespace DealerOn.SalesTaxes.Data
             AddProduct(new Product()
             {
                 Id = Guid.NewGuid(),
-                Name = "DealerOn Box of Chocolates",
+                Name = "Box of Chocolates",
                 Description = "Gourmet chocolates that feature creamy, smooth milk chocolate for a classic, sweet indulgence.",
                 Price = 10.00M,
                 IsImported = true,
@@ -153,7 +156,7 @@ namespace DealerOn.SalesTaxes.Data
             AddProduct(new Product()
             {
                 Id = Guid.NewGuid(),
-                Name = "Bottle of DealerOn Perfume",
+                Name = "Bottle of Perfume",
                 Description = "A handcrafted perfume with the scent of new car smell.",
                 Price = 47.50M,
                 IsImported = true,
@@ -163,7 +166,7 @@ namespace DealerOn.SalesTaxes.Data
             AddProduct(new Product()
             {
                 Id = Guid.NewGuid(),
-                Name = "Bottle of DealerOn Perfume V2",
+                Name = "Bottle of Perfume V2",
                 Description = "NEW AND IMPROVED! A perfume with the scent of new car smell.",
                 Price = 27.99M,
                 IsImported = true,
@@ -173,7 +176,7 @@ namespace DealerOn.SalesTaxes.Data
             AddProduct(new Product()
             {
                 Id = Guid.NewGuid(),
-                Name = "Bottle of DealerOn Perfume V3",
+                Name = "Bottle of Perfume V3",
                 Description = "NEW AND IMPROVED AGAIN! A generic perfume with the scent of new car smell.",
                 Price = 18.99M,
                 IsImported = false,
@@ -183,7 +186,7 @@ namespace DealerOn.SalesTaxes.Data
             AddProduct(new Product()
             {
                 Id = Guid.NewGuid(),
-                Name = "DealerOn's Packet of headache pills",
+                Name = "Packet of headache pills",
                 Description = "Pain reliever and fever reducer.",
                 Price = 9.75M,
                 IsImported = false,
@@ -193,7 +196,7 @@ namespace DealerOn.SalesTaxes.Data
             AddProduct(new Product()
             {
                 Id = Guid.NewGuid(),
-                Name = "DealerOn Box of Chocolates V2",
+                Name = "Box of Chocolates V2",
                 Description = "NEW AND IMPROVED! Gourmet chocolates that feature creamy, smooth milk chocolate for a classic, sweet indulgence.",
                 Price = 11.25M,
                 IsImported = true,

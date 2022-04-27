@@ -42,7 +42,7 @@ namespace DealerOn.SalesTaxes.Services
         /// <param name="product"></param>
         public void AddLineItem(Guid productId, int quanitity = 1)
         {
-            var item = _salesTransaction.LineItems?.SingleOrDefault(p => p.Product.Id == productId);
+            var lineItem = _salesTransaction.LineItems?.SingleOrDefault(p => p.Product.Id == productId);
 
             var product = _productRepository.GetProductById(productId);
 
@@ -50,10 +50,10 @@ namespace DealerOn.SalesTaxes.Services
                 throw new NotFoundException($"Product not found for id: {productId}");
 
             // if Product is already inside receipt, then increment value
-            if (item == null)
+            if (lineItem == null)
                 _salesTransaction.LineItems?.Add(new LineItem(product, quanitity));
             else
-                item.Quantity += quanitity;
+                lineItem.Quantity += quanitity;
         }
 
         /// <summary>

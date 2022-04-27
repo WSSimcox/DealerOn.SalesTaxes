@@ -21,6 +21,7 @@ namespace DealerOn.SalesTaxes.Models
         {
             this.Product = product;
             this.Quantity = quanitity;
+            this.ProductId = product.Id;
         }
 
         /// <summary>

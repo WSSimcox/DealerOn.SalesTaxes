@@ -20,7 +20,7 @@ namespace DealerOn.SalesTaxes.Services
         void AddLineItem(Product product);
 
         /// <summary>
-        /// This function is responsbile for updating LineItem's quanitity or
+        /// This overloaded function is responsbile for updating LineItem's quanitity or
         /// removes entire LineItem if quantity is greater than LineItem's quantity
         /// </summary>
         /// <param name="productId"></param>
@@ -41,13 +41,13 @@ namespace DealerOn.SalesTaxes.Services
         int GetAllProductCount();
 
         /// <summary>
-        /// This function is responsbile for removing a LineItem from a Transaction
+        /// This function is responsbile for removing a LineItem from a SalesTransaction
         /// </summary>
         /// <param name="productId"></param>
         void RemoveLineItem(Guid productId);
 
         /// <summary>
-        /// This function is responsbile for removing a product from a SalesTransaction
+        /// This overloaded function is responsbile for removing a product from a SalesTransaction
         /// </summary>
         /// <param name="product"></param>
         void RemoveLineItem(Product product);
