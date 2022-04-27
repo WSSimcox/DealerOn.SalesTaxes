@@ -1,4 +1,4 @@
-# DealerOn.SalesTaxes
+# SalesTaxes
 This application serves as a prototype POS system for a store catalog.
 
 In addition, this POS system allows users to add and remove products from a shopping catelog. Once a user adds their products to their
